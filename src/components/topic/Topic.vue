@@ -15,10 +15,16 @@ const router = useRouter()
 const go = (val) => {
   router.push(`/print/${val}`)
 }
+const printPdf = () => {
+  window.print()
+}
 </script>
 
 <template>
   <div class="fixed-box">
+    <n-button class="show-answer mr-3" size="tiny" type="info" @click="printPdf()">
+      打印
+    </n-button>
     <n-button class="show-answer mr-3" size="tiny" type="success" @click="go('qt')">
       其他
     </n-button>

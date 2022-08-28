@@ -234,7 +234,6 @@ declare global {
   const useTimestamp: typeof import('@vueuse/core')['useTimestamp']
   const useTitle: typeof import('@vueuse/core')['useTitle']
   const useToggle: typeof import('@vueuse/core')['useToggle']
-  const useTopic: typeof import('./src/composables/useTopic')['useTopic']
   const useTransition: typeof import('@vueuse/core')['useTransition']
   const useUrlSearchParams: typeof import('@vueuse/core')['useUrlSearchParams']
   const useUserMedia: typeof import('@vueuse/core')['useUserMedia']
@@ -502,7 +501,6 @@ declare module '@vue/runtime-core' {
     readonly useTimestamp: UnwrapRef<typeof import('@vueuse/core')['useTimestamp']>
     readonly useTitle: UnwrapRef<typeof import('@vueuse/core')['useTitle']>
     readonly useToggle: UnwrapRef<typeof import('@vueuse/core')['useToggle']>
-    readonly useTopic: UnwrapRef<typeof import('./src/composables/useTopic')['useTopic']>
     readonly useTransition: UnwrapRef<typeof import('@vueuse/core')['useTransition']>
     readonly useUrlSearchParams: UnwrapRef<typeof import('@vueuse/core')['useUrlSearchParams']>
     readonly useUserMedia: UnwrapRef<typeof import('@vueuse/core')['useUserMedia']>
