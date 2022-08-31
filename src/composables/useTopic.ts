@@ -1,4 +1,19 @@
 const showAnswer = ref(false)
+const topicLoading = ref(false)
+
+export const useTopicLoad = () => {
+  const loading = function () {
+    topicLoading.value = true
+  }
+  const unLoading = function () {
+    topicLoading.value = false
+  }
+  return {
+    topicLoading,
+    loading,
+    unLoading,
+  }
+}
 
 export const chapter = ref([
   // {
@@ -108,7 +123,7 @@ export const chapter = ref([
           { label: '其他' },
           { label: '超声基础' },
           { label: '心脏和胸壁、胸膜腔' },
-          { label: '胆道、胰腺和肠胃' },
+          { label: '胆道、胰腺和胃肠' },
           { label: '妇产科' },
           { label: '肝脏和脾脏' },
           { label: '头颈、四肢和浅表器官' },

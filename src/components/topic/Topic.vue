@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import type { Topic } from '@/api/print/topicType'
-import { useShowAnswer } from '@/composables/useTopic'
+import { useShowAnswer, useTopicLoad } from '@/composables/useTopic'
 
 defineProps<{ topic: Topic[]; name: string }>()
+const { topicLoading } = useTopicLoad()
 const {
   showAnswer,
   changeShowAnswer,
@@ -45,28 +46,33 @@ const printPdf = () => {
       {{ showAnswer ? '隐藏答案' : '显示答案' }}
     </n-button>
   </div>
-  <n-h1 align-text class="topic-title" prefix="bar" type="success">
-    <n-text type="success">
-      {{ name }}
-    </n-text>
-  </n-h1>
-  <div text-left>
-    <template v-if="topic.length === 0">
-      <div>暂无数据，请检查链接是否正确</div>
-    </template>
-    <template v-for="item in topic">
-      <template v-if="questions[item.typeCode] === '填空题'">
-        <topic-input :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
+  <template v-if="topicLoading">
+    <n-skeleton height="40px" width="33%" />
+    <n-skeleton :repeat="40" text />
+  </template>
+  <template v-else>
+    <n-h1 align-text class="topic-title" prefix="bar" type="success">
+      <n-text type="success">
+        {{ name + topicLoading }}
+      </n-text>
+    </n-h1>
+    <div text-left>
+      <template v-if="topic.length === 0">
+        <div>暂无数据，请检查链接是否正确</div>
       </template>
-      <template v-else-if="item.rightResult.length > 1">
-        <topic-multiple :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
+      <template v-for="item in topic">
+        <template v-if="questions[item.typeCode] === '填空题'">
+          <topic-input :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
+        </template>
+        <template v-else-if="item.rightResult.length > 1">
+          <topic-multiple :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
+        </template>
+        <template v-else>
+          <topic-radio :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
+        </template>
       </template>
-      <template v-else>
-        <topic-radio :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
-      </template>
-    </template>
-  </div>
-
+    </div>
+  </template>
   <n-drawer v-model:show="active" :width="500" placement="right">
     <n-drawer-content title="章节">
       <chapter />

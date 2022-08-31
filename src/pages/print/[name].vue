@@ -1,10 +1,13 @@
 <script lang="ts" setup>
 import { getList } from '@/api/print/topic'
+import { useTopicLoad } from '@/composables/useTopic'
 
 const props = defineProps<{ name: string }>()
 const topic = ref([])
+const { loading, unLoading } = useTopicLoad()
 
 const getTopicList = async () => {
+  loading()
   const { name } = props
   document.title = name
   const subjectArr = name.split('-')
@@ -13,6 +16,7 @@ const getTopicList = async () => {
     topic.value = await loadJson(url) as []
   }
   else { topic.value = [] }
+  unLoading()
 }
 
 onBeforeMount(async () => {
