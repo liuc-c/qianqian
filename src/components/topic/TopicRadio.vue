@@ -11,9 +11,16 @@ const { showAnswer } = useShowAnswer()
     <topic-common :question-type="questionType" :topic="topic" />
     <div>
       <template v-for="item in topic.choiceAnswers" :key="`${topic.questionId}${item.mark}`">
-        <p :class="item.correct && showAnswer ? 'text-green' : ''">
-          <span v-html="item.mark" />. <span v-html="item.choiceAnswer" />
-        </p>
+        <template v-if="questionType === 'B型题' && item.correct && showAnswer">
+          <p class="text-green">
+            <span v-html="item.mark" />. <span v-html="item.choiceAnswer" />
+          </p>
+        </template>
+        <template v-else-if="questionType !== 'B型题'">
+          <p :class="item.correct && showAnswer ? 'text-green' : ''">
+            <span v-html="item.mark" />. <span v-html="item.choiceAnswer" />
+          </p>
+        </template>
       </template>
     </div>
     <br>

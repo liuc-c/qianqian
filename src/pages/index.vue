@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const router = useRouter()
 const go = () => {
-  router.push('/print/qt')
+  router.push('/print/超声医学科-急诊科及重症监护室-其他')
 }
 </script>
 
