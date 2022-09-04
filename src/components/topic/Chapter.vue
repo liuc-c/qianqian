@@ -1,8 +1,12 @@
 <script lang="ts" setup>
 import { chapter, useTopicLoad } from '@/composables/useTopic'
+const props = defineProps<{ active: boolean;windowWidth: number }>()
+const emits = defineEmits<{ (event: 'update:active', active: boolean): void }>()
 const router = useRouter()
 const { topicLoading } = useTopicLoad()
 const go = (url: string) => {
+  if (props.windowWidth < 500)
+    emits('update:active', false)
   router.push(`/print/${url}`)
 }
 </script>
@@ -12,7 +16,7 @@ const go = (url: string) => {
     <template v-for="item in chapter" :key="item.label">
       <n-h6 align-text prefix="bar" type="success">
         <n-text type="primary">
-          {{ item.label }}
+          {{ item.label }}{{ active }}
         </n-text>
       </n-h6>
       <template v-for="subItem in item.child" :key="subItem.label">

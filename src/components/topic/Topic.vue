@@ -1,6 +1,8 @@
 <script lang="ts" setup>
+import type { Ref } from 'vue'
 import type { Topic } from '@/api/print/topicType'
 import { useShowAnswer, useTopicLoad } from '@/composables/useTopic'
+import { useWindowWidth } from '@/composables/useWindowWidth'
 
 defineProps<{ topic: Topic[]; name: string }>()
 const { topicLoading } = useTopicLoad()
@@ -8,7 +10,7 @@ const {
   showAnswer,
   changeShowAnswer,
 } = useShowAnswer()
-const active = ref(false)
+const active: Ref<boolean> = ref(false)
 const questions = {
   // '01': '',
   '02': 'X型题(多选)',
@@ -29,6 +31,8 @@ const printPdf = () => {
   active.value = false
   window.print()
 }
+
+const windowWidth = useWindowWidth()
 </script>
 
 <template>
@@ -47,13 +51,13 @@ const printPdf = () => {
     </n-button>
   </div>
   <template v-if="topicLoading">
-    <n-skeleton height="40px" width="33%" />
+    <n-skeleton height="40px" mb-6 mt-6 width="33%" />
     <n-skeleton :repeat="40" text />
   </template>
   <template v-else>
     <n-h1 align-text class="topic-title" prefix="bar" type="success">
       <n-text type="success">
-        {{ name + topicLoading }}
+        {{ name }}
       </n-text>
     </n-h1>
     <div text-left>
@@ -73,9 +77,9 @@ const printPdf = () => {
       </template>
     </div>
   </template>
-  <n-drawer v-model:show="active" :width="500" placement="right">
+  <n-drawer v-model:show="active" :width="windowWidth < 600 ? windowWidth : 600" placement="right">
     <n-drawer-content title="章节">
-      <chapter />
+      <chapter v-model:active="active" :window-width="windowWidth" />
     </n-drawer-content>
   </n-drawer>
 </template>
