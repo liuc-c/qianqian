@@ -19,14 +19,16 @@ const getTopicList = async () => {
   unLoading()
 }
 
-onBeforeMount(async () => {
-  await getTopicList()
-})
+const route = useRoute()
+let preParams = '' // 上一个路由参数
 
 // 当路由参数变化时，页面数据无法更新的时候
 watchEffect(() => {
+  const params = route.params.name as string
   // 加载数据
-  getTopicList()
+  if (preParams === '' || preParams !== params)
+    getTopicList()
+  preParams = params
 })
 
 async function loadJson(url: string) {
@@ -43,8 +45,3 @@ async function loadJson(url: string) {
 <template>
   <Topic :name="props.name" :topic="topic" />
 </template>
-
-<route lang="yaml">
-meta:
-  title: 其他
-</route>
