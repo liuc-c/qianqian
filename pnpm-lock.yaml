@@ -11,6 +11,7 @@ specifiers:
   axios: ^0.27.2
   eslint: ^8.20.0
   jsdom: ^20.0.0
+  lodash: ^4.17.21
   naive-ui: ^2.32.2
   pnpm: ^7.6.0
   taze: ^0.7.6
@@ -28,6 +29,7 @@ specifiers:
 dependencies:
   '@vueuse/core': 9.0.0_vue@3.2.37
   axios: 0.27.2
+  lodash: 4.17.21
   naive-ui: 2.32.2_vue@3.2.37
   vue: 3.2.37
   vue-router: 4.1.2_vue@3.2.37

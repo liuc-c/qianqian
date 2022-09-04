@@ -10,7 +10,7 @@ const { showAnswer } = useShowAnswer()
   <topic-common :question-type="questionType" :topic="topic" />
   <div>
     <template v-for="item in topic.choiceAnswers" :key="`${topic.questionId}${item.mark}`">
-      <p :class="item.correct && showAnswer ? 'text-green' : ''">
+      <p v-if="item.correct && showAnswer " class="text-green">
         <span v-html="item.mark" />. <span v-html="item.choiceAnswer" />
       </p>
     </template>
