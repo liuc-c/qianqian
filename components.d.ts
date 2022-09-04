@@ -8,6 +8,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Chapter: typeof import('./src/components/topic/Chapter.vue')['default']
+    FilterQuestions: typeof import('./src/components/topic/FilterQuestions.vue')['default']
     Footer: typeof import('./src/components/Footer.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
