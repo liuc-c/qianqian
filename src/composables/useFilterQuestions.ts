@@ -1,5 +1,5 @@
 import type { Ref } from 'vue'
-import type { Topic } from '@/api/print/topicType'
+import { useTopic } from '@/composables/useTopic'
 
 export type topicTypeType = Ref<{ [key: string]: string | boolean }[] | []>
 export type questionsType = Ref<{ [key: string]: string }>
@@ -21,6 +21,7 @@ const questions: questionsType = ref({
   '13': '简答题',
   '14': '案例分析题',
 })
+const { topic } = useTopic()
 
 const unique = (arr: any[], val: string) => {
   const res = new Set()
@@ -33,17 +34,21 @@ const unique = (arr: any[], val: string) => {
   })
 }
 
-export const useFilterQuestions: (topic: Topic[]) =>
-{
-  topicTypeArr: topicTypeType
-} = (topic: Topic[]) => {
-  topicTypeArr.value = unique(topic, 'typeCode')
+export const useFilterQuestionsWatch = () => {
+  topicTypeArr.value = unique(topic.value, 'typeCode')
+  watch(topic, (topic) => {
+    topicTypeArr.value = unique(topic, 'typeCode')
+  })
   return {
     topicTypeArr,
   }
 }
+export const useTopicTypeArr = () => { return { topicTypeArr } }
 
 export const useQuestions = () => {
   return questions
 }
 
+export const isShowTopic = (typeCode: string) => {
+  return topicTypeArr.value.find(item => item.typeCode === typeCode)?.isShow
+}

@@ -17,7 +17,7 @@ const go = (url: string) => {
       <template v-for="item in chapter" :key="item.label">
         <n-h6 align-text prefix="bar" type="success">
           <n-text type="primary">
-            {{ item.label }}{{ active }}
+            {{ item.label }}
           </n-text>
         </n-h6>
         <template v-for="subItem in item.child" :key="subItem.label">
