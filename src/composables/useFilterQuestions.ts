@@ -1,6 +1,6 @@
 import type { Ref } from 'vue'
+import * as _ from 'lodash'
 import { useTopic } from '@/composables/useTopic'
-
 export type topicTypeType = Ref<{ [key: string]: string | boolean }[] | []>
 export type questionsType = Ref<{ [key: string]: string }>
 
@@ -24,12 +24,14 @@ const questions: questionsType = ref({
 const { topic } = useTopic()
 
 const unique = (arr: any[], val: string) => {
+  const count = _.countBy(arr, val)
   const res = new Set()
   return arr.filter(item => !res.has(item[val]) && res.add(item[val])).map((item) => {
     const temp: { [key: string]: any } = {}
     temp[val] = item[val]
     temp.label = questions.value[item[val]]
     temp.isShow = true
+    temp.count = count[temp[val]]
     return temp
   })
 }

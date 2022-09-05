@@ -40,7 +40,7 @@ const closeDrawer = () => {
       </n-space>
       <n-space item-style="display: flex;">
         <n-checkbox
-          v-for="item in topicTypeArr" :key="item.typeCode" :checked="item.isShow" :label="item.label"
+          v-for="item in topicTypeArr" :key="item.typeCode" :checked="item.isShow" :label="`${item.label} （ ${item.count} 题 ）`"
           @update:checked="handleUpdateChecked(item)"
         />
       </n-space>

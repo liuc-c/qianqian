@@ -45,6 +45,7 @@ declare global {
   const isReactive: typeof import('vue')['isReactive']
   const isReadonly: typeof import('vue')['isReadonly']
   const isRef: typeof import('vue')['isRef']
+  const isShowTopic: typeof import('./src/composables/useFilterQuestions')['isShowTopic']
   const makeDestructurable: typeof import('@vueuse/core')['makeDestructurable']
   const markRaw: typeof import('vue')['markRaw']
   const nextTick: typeof import('vue')['nextTick']
@@ -159,7 +160,7 @@ declare global {
   const useFetch: typeof import('@vueuse/core')['useFetch']
   const useFileDialog: typeof import('@vueuse/core')['useFileDialog']
   const useFileSystemAccess: typeof import('@vueuse/core')['useFileSystemAccess']
-  const useFilterQuestions: typeof import('./src/composables/useFilterQuestions')['useFilterQuestions']
+  const useFilterQuestionsWatch: typeof import('./src/composables/useFilterQuestions')['useFilterQuestionsWatch']
   const useFocus: typeof import('@vueuse/core')['useFocus']
   const useFocusWithin: typeof import('@vueuse/core')['useFocusWithin']
   const useFps: typeof import('@vueuse/core')['useFps']
@@ -237,7 +238,10 @@ declare global {
   const useTimestamp: typeof import('@vueuse/core')['useTimestamp']
   const useTitle: typeof import('@vueuse/core')['useTitle']
   const useToggle: typeof import('@vueuse/core')['useToggle']
+  const useTopic: typeof import('./src/composables/useTopic')['useTopic']
   const useTopicLoad: typeof import('./src/composables/useTopic')['useTopicLoad']
+  const useTopicTypeArr: typeof import('./src/composables/useFilterQuestions')['useTopicTypeArr']
+  const useTopicWatch: typeof import('./src/composables/useTopic')['useTopicWatch']
   const useTransition: typeof import('@vueuse/core')['useTransition']
   const useUrlSearchParams: typeof import('@vueuse/core')['useUrlSearchParams']
   const useUserMedia: typeof import('@vueuse/core')['useUserMedia']
@@ -317,6 +321,7 @@ declare module '@vue/runtime-core' {
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
+    readonly isShowTopic: UnwrapRef<typeof import('./src/composables/useFilterQuestions')['isShowTopic']>
     readonly makeDestructurable: UnwrapRef<typeof import('@vueuse/core')['makeDestructurable']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
@@ -431,7 +436,7 @@ declare module '@vue/runtime-core' {
     readonly useFetch: UnwrapRef<typeof import('@vueuse/core')['useFetch']>
     readonly useFileDialog: UnwrapRef<typeof import('@vueuse/core')['useFileDialog']>
     readonly useFileSystemAccess: UnwrapRef<typeof import('@vueuse/core')['useFileSystemAccess']>
-    readonly useFilterQuestions: UnwrapRef<typeof import('./src/composables/useFilterQuestions')['useFilterQuestions']>
+    readonly useFilterQuestionsWatch: UnwrapRef<typeof import('./src/composables/useFilterQuestions')['useFilterQuestionsWatch']>
     readonly useFocus: UnwrapRef<typeof import('@vueuse/core')['useFocus']>
     readonly useFocusWithin: UnwrapRef<typeof import('@vueuse/core')['useFocusWithin']>
     readonly useFps: UnwrapRef<typeof import('@vueuse/core')['useFps']>
@@ -509,7 +514,10 @@ declare module '@vue/runtime-core' {
     readonly useTimestamp: UnwrapRef<typeof import('@vueuse/core')['useTimestamp']>
     readonly useTitle: UnwrapRef<typeof import('@vueuse/core')['useTitle']>
     readonly useToggle: UnwrapRef<typeof import('@vueuse/core')['useToggle']>
+    readonly useTopic: UnwrapRef<typeof import('./src/composables/useTopic')['useTopic']>
     readonly useTopicLoad: UnwrapRef<typeof import('./src/composables/useTopic')['useTopicLoad']>
+    readonly useTopicTypeArr: UnwrapRef<typeof import('./src/composables/useFilterQuestions')['useTopicTypeArr']>
+    readonly useTopicWatch: UnwrapRef<typeof import('./src/composables/useTopic')['useTopicWatch']>
     readonly useTransition: UnwrapRef<typeof import('@vueuse/core')['useTransition']>
     readonly useUrlSearchParams: UnwrapRef<typeof import('@vueuse/core')['useUrlSearchParams']>
     readonly useUserMedia: UnwrapRef<typeof import('@vueuse/core')['useUserMedia']>
