@@ -6,17 +6,17 @@ export type questionsType = Ref<{ [key: string]: string }>
 
 const topicTypeArr: topicTypeType = ref([])
 const questions: questionsType = ref({
-  // '01': '',
+  '01': '未知题型01',
   '02': 'X型题(多选)',
   '03': '填空题',
   '04': '判断题',
-  // '05': '',
+  '05': '未知题型05',
   '06': 'A1型题',
   '07': 'A2型题',
   '08': 'A3/A4型题',
   '09': 'B型题',
-  // '10': '',
-  // '11': '',
+  '10': '未知题型10',
+  '11': '未知题型11',
   '12': '名词解释',
   '13': '简答题',
   '14': '案例分析题',
