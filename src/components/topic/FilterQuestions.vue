@@ -12,9 +12,9 @@ const handleUpdateChecked = (item: any) => {
 }
 
 const { topicTypeArr } = useTopicTypeArr()
-const selectAll = () => {
+const selectAll = (flag = true) => {
   topicTypeArr.value = topicTypeArr.value.map((item) => {
-    item.isShow = true
+    item.isShow = flag
     return item
   })
 }
@@ -30,6 +30,9 @@ const closeDrawer = () => {
       <n-space class="mb-5">
         <n-button class="mr-3 mb-2" size="tiny" type="success" @click="selectAll">
           全选
+        </n-button>
+        <n-button class="mr-3 mb-2" size="tiny" type="success" @click="selectAll(false)">
+          全不选
         </n-button>
         <n-button class="mr-3 mb-2" size="tiny" type="success" @click="closeDrawer()">
           关闭
