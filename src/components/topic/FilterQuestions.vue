@@ -1,0 +1,52 @@
+<script lang="ts" setup>
+import { useTopicTypeArr } from '@/composables/useFilterQuestions'
+import { useTopicLoad } from '@/composables/useTopic'
+
+const { active } = defineProps<{ active: boolean }>()
+const emits = defineEmits<{
+  (event: 'update:active', active: boolean): void
+}>()
+const { topicLoading } = useTopicLoad()
+const handleUpdateChecked = (item: any) => {
+  item.isShow = !item.isShow
+}
+
+const { topicTypeArr } = useTopicTypeArr()
+const selectAll = () => {
+  topicTypeArr.value = topicTypeArr.value.map((item) => {
+    item.isShow = true
+    return item
+  })
+}
+
+const closeDrawer = () => {
+  emits('update:active', false)
+}
+</script>
+
+<template>
+  <n-drawer-content title="题型">
+    <n-spin :show="topicLoading">
+      <n-space class="mb-5">
+        <n-button class="mr-3 mb-2" size="tiny" type="success" @click="selectAll">
+          全选
+        </n-button>
+        <n-button class="mr-3 mb-2" size="tiny" type="success" @click="closeDrawer()">
+          关闭
+        </n-button>
+      </n-space>
+      <n-space item-style="display: flex;">
+        <n-checkbox
+          v-for="item in topicTypeArr" :key="item.typeCode" :checked="item.isShow" :label="item.label"
+          @update:checked="handleUpdateChecked(item)"
+        />
+      </n-space>
+    </n-spin>
+  </n-drawer-content>
+</template>
+
+<style scoped>
+button {
+  background-color: var(--n-color);
+}
+</style>
