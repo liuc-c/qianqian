@@ -20,16 +20,11 @@ const getTopicList = async () => {
 }
 
 const route = useRoute()
-let preParams = '' // 上一个路由参数
 
 // 当路由参数变化时，页面数据无法更新的时候
 watchEffect(() => {
-  const params = route.params.name as string
-  // 加载数据
-  if (preParams === '' || preParams !== params)
-    getTopicList()
-  preParams = params
-})
+  getTopicList()
+}, { flush: 'post' })
 
 async function loadJson(url: string) {
   // 加载

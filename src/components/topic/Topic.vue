@@ -26,17 +26,11 @@ const questions = useQuestions()
 
 // 题型控制
 const route = useRoute()
-let preParams = '' // 上一个路由参数
 let topicTypeArr
-onMounted(() => {
-  topicTypeArr = useFilterQuestions(props.topic)
-})
+
 watchEffect(() => {
-  const params = route.params.name as string
-  if (preParams === '' || preParams !== params)
-    topicTypeArr = useFilterQuestions(props.topic).topicTypeArr
-  preParams = params
-})
+  topicTypeArr = useFilterQuestions(props.topic).topicTypeArr
+}, { flush: 'post' })
 
 // 抽屉控制
 const drawerFlag = ref('')
