@@ -7,12 +7,12 @@ defineProps<{ topic: Topic; questionType: string }>()
 <template>
   <div>
     <template v-if="topic.mainTopic !== ''">
-      <p>{{ topic.linkNo }}. 【{{ questionType }}】</p>
+      <p><span text-green>{{ topic.linkNo }}.</span> 【{{ questionType }}】</p>
       <p><span text-green>题干：</span><span v-html="`${topic.mainTopic}`" /></p>
       <p><span text-green>问：</span><span v-html="`${topic.topic}`" /></p>
     </template>
     <template v-else>
-      <p v-html="`${topic.linkNo}. 【${questionType}】${topic.topic}`" />
+      <p><span text-green>{{ topic.linkNo }}.</span><span v-html="` 【${questionType}】${topic.topic}`" /></p>
     </template>
   </div>
 </template>

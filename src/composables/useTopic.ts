@@ -2,6 +2,14 @@ import { getList } from '@/api/print/topic'
 const showAnswer = ref(false)
 const topicLoading = ref(false)
 const topic = ref([])
+const greenMode = ref(false)
+
+export const useGreenMode = () => {
+  const changeGreenMode = () => {
+    greenMode.value = !greenMode.value
+  }
+  return { greenMode, changeGreenMode }
+}
 
 export const useTopicLoad = () => {
   const loading = function () {
