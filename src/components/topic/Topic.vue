@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import type { Ref } from 'vue'
-import { isShowTopic, useFilterQuestionsWatch, useQuestions } from '@/composables/useFilterQuestions'
+import { useFilterQuestionsWatch, useQuestions } from '@/composables/useFilterQuestions'
 
 import FilterQuestions from '@/components/topic/FilterQuestions.vue'
-import { useShowAnswer, useTopic, useTopicLoad } from '@/composables/useTopic'
+import { useGreenMode, useShowAnswer, useTopic, useTopicLoad } from '@/composables/useTopic'
 import { useWindowWidth } from '@/composables/useWindowWidth'
 
 defineProps<{ name: string }>()
@@ -35,12 +35,19 @@ const openDrawer = (flag: string) => {
   drawerFlag.value = flag
   active.value = !active.value
 }
+const {
+  changeGreenMode,
+  greenMode,
+} = useGreenMode()
 </script>
 
 <template>
   <div class="fixed-box print-hidden">
     <n-button class="show-answer mr-3" size="tiny" type="info" @click="printPdf()">
       打印
+    </n-button>
+    <n-button :type="greenMode ? 'success' : 'info'" class="show-answer mr-3" size="tiny" @click="changeGreenMode()">
+      {{ greenMode ? '关闭' : '打开' }}节约模式
     </n-button>
     <n-button class="show-answer mr-3" size="tiny" type="success" @click="openDrawer('filterQuestions')">
       题型
@@ -66,19 +73,21 @@ const openDrawer = (flag: string) => {
       <template v-if="topic.length === 0">
         <div>暂无数据，请检查链接是否正确</div>
       </template>
-      <template v-for="item in topic">
-        <template v-if="isShowTopic(item.typeCode)">
-          <template v-if="questions[item.typeCode] === '填空题'">
-            <topic-input :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
-          </template>
-          <template v-else-if="item.rightResult.length > 1">
-            <topic-multiple :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
-          </template>
-          <template v-else>
-            <topic-radio :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
-          </template>
+      <TransitionGroup name="list">
+        <template v-for="item in topic" :key="item.questionId">
+          <div v-if="isShowTopic(item.typeCode)">
+            <template v-if="questions[item.typeCode] === '填空题'">
+              <topic-input :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
+            </template>
+            <template v-else-if="item.rightResult.length > 1">
+              <topic-multiple :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
+            </template>
+            <template v-else>
+              <topic-radio :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
+            </template>
+          </div>
         </template>
-      </template>
+      </TransitionGroup>
     </div>
   </template>
   <n-drawer v-model:show="active" :width="windowWidth < 600 ? windowWidth : 600" placement="right">
@@ -92,9 +101,10 @@ const openDrawer = (flag: string) => {
 </template>
 
 <style scoped>
-.topic-title{
+.topic-title {
   text-align: left;
 }
+
 .fixed-box {
   position: fixed;
   top: 12px;
