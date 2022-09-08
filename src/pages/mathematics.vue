@@ -21,14 +21,10 @@ function isPrimeNumber(a) {
 function jisuan() {
   results.value = []
   // 判断输入数值是否满足条件
-  if (value.value % 2 === 0 && value.value < 6) {
-    value.value = 0
-    results.value.push('这个数不是大于等于6的偶数')
+  if (value.value % 2 !== 0 || value.value < 6) {
+    value.value = ''
+    results.value.push('该数字不符合条件，请重新输入数字！！！')
     message.warning('这个数不是大于等于6的偶数')
-  }
-  if (value.value % 2 !== 0) {
-    message.warning('这个数不是偶数')
-    results.value.push('该数字不符合条件，请继续输入数字！！！')
   }
   else {
     fenjie(value.value)
