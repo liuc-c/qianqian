@@ -39,3 +39,8 @@ const go = (url: string) => {
     </div>
   </div>
 </template>
+
+<route lang="yaml">
+meta:
+  title: 东莞仔
+</route>
