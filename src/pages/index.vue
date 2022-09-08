@@ -10,11 +10,11 @@ const go = (url: string) => {
     <div i-carbon-ibm-cloud inline-block text-4xl />
     <p>
       <a href="https://github.com/antfu/vitesse-lite" rel="noreferrer" target="_blank">
-        仟仟
+        东莞仔
       </a>
     </p>
     <p>
-      <em op75 text-sm>嘿嘿嘿</em>
+      <em op75 text-sm>每天努力一点</em>
     </p>
 
     <div>

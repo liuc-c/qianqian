@@ -1,5 +1,5 @@
 <script setup>
-import { defineComponent, ref } from 'vue'
+import { ref } from 'vue'
 import { useMessage } from 'naive-ui'
 // 定义需要的变量
 const value = ref('')
@@ -12,10 +12,7 @@ function isPrimeNumber(a) {
     if (a % i === 0)
       break
   }
-  if (i > a / 2)
-    return true
-  else
-    return false
+  return i > a / 2
 }
 // 点击按钮出发事件
 function jisuan() {
@@ -48,9 +45,9 @@ function fenjie(number) {
     <n-space justify="center" align="center">
       <n-input v-model:value.number="value" placeholder="请输入大于等于6的偶数" />
     </n-space>
-    <n-card title="计算结果" hoverable>
-      <span v-for="(value, index) in results" :key="index" p-4>
-        {{ value }}
+    <n-card title="计算结果" :hoverable="true">
+      <span v-for="(item, index) in results" :key="index" p-4>
+        {{ item }}
       </span>
     </n-card>
     <n-button type="info" @click="jisuan">
@@ -61,7 +58,7 @@ function fenjie(number) {
 
 <style scoped>
 .n-card {
-  max-width: 300px;
+  max-width: 400px;
 }
 .box{
   display: flex;
@@ -73,3 +70,8 @@ function fenjie(number) {
   flex-direction: column;
 }
 </style>
+
+<route lang="yaml">
+meta:
+  title: 哥德巴赫猜想
+</route>
