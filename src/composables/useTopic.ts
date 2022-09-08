@@ -1,5 +1,15 @@
+import { getList } from '@/api/print/topic'
 const showAnswer = ref(false)
 const topicLoading = ref(false)
+const topic = ref([])
+const greenMode = ref(false)
+
+export const useGreenMode = () => {
+  const changeGreenMode = () => {
+    greenMode.value = !greenMode.value
+  }
+  return { greenMode, changeGreenMode }
+}
 
 export const useTopicLoad = () => {
   const loading = function () {
@@ -13,6 +23,34 @@ export const useTopicLoad = () => {
     loading,
     unLoading,
   }
+}
+
+export const useTopicWatch = async (name: string) => {
+  const getTopicList = async () => {
+    topicLoading.value = true
+    document.title = name
+    const subjectArr = name.split('-')
+    if (subjectArr.length === 3) {
+      const url = `${subjectArr[0]}/${subjectArr[1]}/${subjectArr[2]}`
+      topic.value = await loadJson(url) as []
+    }
+    else { topic.value = [] }
+    topicLoading.value = false
+  }
+  async function loadJson(url: string) {
+    // 加载
+    try {
+      return await getList(`/json/医学电子书包/${url}.json`)
+    }
+    catch (e) {
+      return []
+    }
+  }
+  await getTopicList()
+}
+
+export const useTopic = () => {
+  return { topic }
 }
 
 export const chapter = ref([
