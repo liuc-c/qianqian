@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const router = useRouter()
-const go = () => {
-  router.push('/print/超声医学科-急诊科及重症监护室-其他')
+const go = (url: string) => {
+  router.push(url)
 }
 </script>
 
@@ -20,9 +20,21 @@ const go = () => {
     <div>
       <n-button
         class="m-3 text-sm"
-        @click="go()"
+        @click="go('/print/超声医学科-急诊科及重症监护室-其他')"
       >
         Go
+      </n-button>
+      <n-button
+        class="m-3 text-sm"
+        @click="go('/gua')"
+      >
+        算卦
+      </n-button>
+      <n-button
+        class="m-3 text-sm"
+        @click="go('/mathematics')"
+      >
+        哥德巴赫猜想
       </n-button>
     </div>
   </div>

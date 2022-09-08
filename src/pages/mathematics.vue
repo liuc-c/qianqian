@@ -1,0 +1,79 @@
+<script setup>
+import { defineComponent, ref } from 'vue'
+import { useMessage } from 'naive-ui'
+// 定义需要的变量
+const value = ref('')
+const results = ref(['请输入大于等于6的偶数'])
+const message = useMessage()
+// 判断这个数是否是质数
+function isPrimeNumber(a) {
+  let i = 2
+  for (i; i <= a / 2; i++) {
+    if (a % i === 0)
+      break
+  }
+  if (i > a / 2)
+    return true
+  else
+    return false
+}
+// 点击按钮出发事件
+function jisuan() {
+  results.value = []
+  // 判断输入数值是否满足条件
+  if (value.value % 2 === 0 && value.value < 6) {
+    value.value = 0
+    results.value.push('这个数不是大于等于6的偶数')
+    message.warning('这个数不是大于等于6的偶数')
+  }
+  if (value.value % 2 !== 0) {
+    message.warning('这个数不是偶数')
+    results.value.push('该数字不符合条件，请继续输入数字！！！')
+  }
+  else {
+    fenjie(value.value)
+  }
+}
+// 对输入的数进行分解
+function fenjie(number) {
+  for (let i = 2; i <= number / 2; i++) {
+    if (isPrimeNumber(i) && isPrimeNumber(number - i)) {
+      results.value.push(i)
+      results.value.push(number - i)
+      break
+    }
+  }
+}
+</script>
+
+<template>
+  <div class="box">
+    <n-h1>哥德巴赫猜想</n-h1>
+    <n-space justify="center" align="center">
+      <n-input v-model:value.number="value" placeholder="请输入大于等于6的偶数" />
+    </n-space>
+    <n-card title="计算结果" hoverable>
+      <span v-for="(value, index) in results" :key="index" p-4>
+        {{ value }}
+      </span>
+    </n-card>
+    <n-button type="info" @click="jisuan">
+      计算
+    </n-button>
+  </div>
+</template>
+
+<style scoped>
+.n-card {
+  max-width: 300px;
+}
+.box{
+  display: flex;
+  /*margin: auto;*/
+  height: 300px;
+  margin-top: 200px;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+</style>

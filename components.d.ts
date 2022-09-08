@@ -10,6 +10,7 @@ declare module '@vue/runtime-core' {
     Chapter: typeof import('./src/components/topic/Chapter.vue')['default']
     FilterQuestions: typeof import('./src/components/topic/FilterQuestions.vue')['default']
     Footer: typeof import('./src/components/Footer.vue')['default']
+    GuaHead: typeof import('./src/components/gua/guaHead.vue')['default']
     NaiveProvider: typeof import('./src/components/NaiveProvider.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

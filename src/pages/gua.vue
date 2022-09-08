@@ -30,9 +30,9 @@ for (let i = 0; i < 6; i++) {
 const arr = ref([])
 arr.value.push('***** 卦象展示 *****')
 arrSum.forEach((item, index) => {
-  if (index === 0)
+  if (gua === 0)
     arr.value.push('***** 上卦 *****')
-  else if (index === 3)
+  else if (gua === 3)
     arr.value.push('***** 下卦 *****')
 
   if (item === 7 || item === 9)
@@ -43,7 +43,7 @@ arrSum.forEach((item, index) => {
 </script>
 
 <template>
-  <p v-for="(value, index) in arr" :key="index">
+  <p v-for="(value, index) in arr" :key="gua">
     {{ value }}
   </p>
 </template>
