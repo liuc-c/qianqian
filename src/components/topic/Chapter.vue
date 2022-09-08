@@ -26,13 +26,13 @@ const go = (url: string) => {
               {{ subItem.label }}
             </n-text>
           </n-h6>
-          <div class="btn-box">
+          <n-space :wrap-item="true">
             <template v-for="btn in subItem.child" :key="btn.label">
-              <n-button class="mr-3 mb-2" size="tiny" type="success" @click="go(`${item.label}-${subItem.label}-${btn.label}`)">
+              <n-button size="tiny" type="success" @click="go(`${item.label}-${subItem.label}-${btn.label}`)">
                 {{ btn.label }}
               </n-button>
             </template>
-          </div>
+          </n-space>
         </template>
       </template>
     </n-spin>
@@ -44,9 +44,5 @@ const go = (url: string) => {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-}
-
-.btn-box > button {
-  background-color: var(--n-color);
 }
 </style>

@@ -43,21 +43,23 @@ const {
 
 <template>
   <div class="fixed-box print-hidden">
-    <n-button class="show-answer mr-3" size="tiny" type="info" @click="printPdf()">
-      打印
-    </n-button>
-    <n-button :type="greenMode ? 'success' : 'info'" class="show-answer mr-3" size="tiny" @click="changeGreenMode()">
-      {{ greenMode ? '关闭' : '打开' }}节约模式
-    </n-button>
-    <n-button class="show-answer mr-3" size="tiny" type="success" @click="openDrawer('filterQuestions')">
-      题型
-    </n-button>
-    <n-button class="show-answer mr-3" size="tiny" type="success" @click="openDrawer('chapter')">
-      章节
-    </n-button>
-    <n-button class="show-answer mr-3" size="tiny" type="success" @click="changeShowAnswer">
-      {{ showAnswer ? '隐藏答案' : '显示答案' }}
-    </n-button>
+    <n-space>
+      <n-button class="show-answer" size="tiny" type="info" @click="printPdf()">
+        打印
+      </n-button>
+      <n-button :type="greenMode ? 'success' : 'info'" class="show-answer =" size="tiny" @click="changeGreenMode()">
+        {{ greenMode ? '关闭' : '打开' }}节约模式
+      </n-button>
+      <n-button class="show-answer" size="tiny" type="success" @click="openDrawer('filterQuestions')">
+        题型
+      </n-button>
+      <n-button class="show-answer" size="tiny" type="success" @click="openDrawer('chapter')">
+        章节
+      </n-button>
+      <n-button class="show-answer" size="tiny" type="success" @click="changeShowAnswer">
+        {{ showAnswer ? '隐藏答案' : '显示答案' }}
+      </n-button>
+    </n-space>
   </div>
   <template v-if="topicLoading">
     <n-skeleton height="40px" mb-6 mt-6 width="33%" />
@@ -108,10 +110,6 @@ const {
 .fixed-box {
   position: fixed;
   top: 12px;
-  right: 50px;
-}
-
-.fixed-box > button {
-  background-color: var(--n-color);
+  right: 60px;
 }
 </style>

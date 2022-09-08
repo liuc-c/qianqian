@@ -8,7 +8,9 @@ import './styles/main.css'
 import 'uno.css'
 
 const app = createApp(App)
-
+const meta = document.createElement('meta')
+meta.name = 'naive-ui-style'
+document.head.appendChild(meta)
 app.use(naive)
 app.use(router)
 app.mount('#app')

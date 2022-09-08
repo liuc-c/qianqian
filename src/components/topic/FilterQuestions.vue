@@ -28,13 +28,13 @@ const closeDrawer = () => {
   <n-drawer-content title="题型">
     <n-spin :show="topicLoading">
       <n-space class="mb-5">
-        <n-button class="mr-3 mb-2" size="tiny" type="success" @click="selectAll()">
+        <n-button size="tiny" type="success" @click="selectAll()">
           全选
         </n-button>
-        <n-button class="mr-3 mb-2" size="tiny" type="success" @click="selectAll(false)">
+        <n-button size="tiny" type="success" @click="selectAll(false)">
           全不选
         </n-button>
-        <n-button class="mr-3 mb-2" size="tiny" type="success" @click="closeDrawer()">
+        <n-button size="tiny" type="success" @click="closeDrawer()">
           关闭
         </n-button>
       </n-space>
@@ -49,7 +49,4 @@ const closeDrawer = () => {
 </template>
 
 <style scoped>
-button {
-  background-color: var(--n-color);
-}
 </style>
