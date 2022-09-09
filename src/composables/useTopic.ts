@@ -182,6 +182,12 @@ export const chapter = ref([
           { label: '骨关节' },
         ],
       },
+      {
+        label: '外科',
+        child: [
+          { label: '其他' },
+        ],
+      },
       // {
       //   label: '核医学科',
       //   child: [ // TODO
@@ -189,10 +195,7 @@ export const chapter = ref([
       //   ],
       // },
       // {
-      //   label: '外科', // TODO
-      //   child: [
-      //     { label: '其他' },
-      //   ],
+
       // },
       // {
       //   label: '妇产科', // TODO

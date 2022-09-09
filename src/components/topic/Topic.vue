@@ -48,7 +48,7 @@ const {
         打印
       </n-button>
       <n-button :type="greenMode ? 'success' : 'info'" class="show-answer =" size="tiny" @click="changeGreenMode()">
-        {{ greenMode ? '关闭' : '打开' }}节约模式
+        {{ greenMode ? '不省了' : '省点纸吧' }}
       </n-button>
       <n-button class="show-answer" size="tiny" type="success" @click="openDrawer('filterQuestions')">
         题型
