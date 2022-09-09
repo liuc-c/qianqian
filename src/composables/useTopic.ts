@@ -188,6 +188,13 @@ export const chapter = ref([
           { label: '其他' },
         ],
       },
+      {
+        label: '出科考试',
+        child: [
+          { label: '重症医学科' },
+        ],
+      },
+
       // {
       //   label: '核医学科',
       //   child: [ // TODO
