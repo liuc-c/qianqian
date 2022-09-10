@@ -16,7 +16,6 @@ const { greenMode } = useGreenMode()
       </p>
     </template>
   </div>
-  <br>
 </template>
 
 <style scoped>

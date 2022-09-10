@@ -13,12 +13,11 @@ const { greenMode } = useGreenMode()
     <TransitionGroup name="list">
       <template v-for="item in topic.choiceAnswers" :key="`${topic.questionId}${item.mark}`">
         <p v-if="item.correct && showAnswer " class="text-green">
-          <span v-html="item.mark" />. <span v-html="item.choiceAnswer" />
+          <span v-html="item.mark" />. <span border-b v-html="item.choiceAnswer" />
         </p>
       </template>
     </TransitionGroup>
   </div>
-  <br>
 </template>
 
 <style scoped>
