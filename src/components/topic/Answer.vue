@@ -2,7 +2,7 @@
 import type { Topic } from '@/api/print/topicType'
 import { useAnswerAnalyse } from '@/composables/useTopic'
 
-defineProps<{ topic: Topic; questionType: string }>()
+defineProps<{ topic: Topic }>()
 const {
   answerAnalyse,
 } = useAnswerAnalyse()

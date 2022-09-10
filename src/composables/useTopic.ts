@@ -1,7 +1,10 @@
+import type { Ref } from 'vue'
 import { getList } from '@/api/print/topic'
+import type { Topic } from '@/api/print/topicType'
+
 const showAnswer = ref(false)
 const topicLoading = ref(false)
-const topic = ref([])
+const topic: Ref<Topic[]> = ref([])
 const greenMode = ref(false)
 
 // 绿色模式，省点纸
@@ -9,7 +12,10 @@ export const useGreenMode = () => {
   const changeGreenMode = () => {
     greenMode.value = !greenMode.value
   }
-  return { greenMode, changeGreenMode }
+  return {
+    greenMode,
+    changeGreenMode,
+  }
 }
 
 // 答案模式
@@ -18,7 +24,10 @@ export const useAnswerMode = () => {
   const changeAnswerMode = () => {
     answerMode.value = !answerMode.value
   }
-  return { answerMode, changeAnswerMode }
+  return {
+    answerMode,
+    changeAnswerMode,
+  }
 }
 
 // 答案解析相关
@@ -27,7 +36,10 @@ export const useAnswerAnalyse = () => {
   const changeAnswerAnalyse = () => {
     answerAnalyse.value = !answerAnalyse.value
   }
-  return { answerAnalyse, changeAnswerAnalyse }
+  return {
+    answerAnalyse,
+    changeAnswerAnalyse,
+  }
 }
 
 // 题目加载
@@ -53,12 +65,42 @@ export const useTopicWatch = async (name: string) => {
     const subjectArr = name.split('-')
     if (subjectArr.length === 3) {
       const url = `${subjectArr[0]}/${subjectArr[1]}/${subjectArr[2]}`
-      topic.value = await loadJson(url) as []
+      const res = await loadJson(url) as Topic[]
+      let preMainTopic = ''
+      let preMainTopicLinkNo = 0
+      let preAnswerAnalyse = ''
+      let preAnswerAnalyseLinkNo = 0
+      topic.value = res.map((item) => {
+        // 处理重复题干
+        if (item.mainTopic !== '') {
+          if (preMainTopic !== item.mainTopic) {
+            preMainTopic = item.mainTopic
+            preMainTopicLinkNo = item.linkNo
+          }
+          else {
+            item.mainTopic = `同${preMainTopicLinkNo}题`
+          }
+        }
+        // 处理重复解析
+        if (item.answerAnalyse !== '') {
+          if (item.answerAnalyse !== preAnswerAnalyse) {
+            preAnswerAnalyse = item.answerAnalyse
+            preAnswerAnalyseLinkNo = item.linkNo
+          }
+          else {
+            item.answerAnalyse = `同${preAnswerAnalyseLinkNo}题`
+          }
+        }
+        return item
+      })
     }
-    else { topic.value = [] }
+    else {
+      topic.value = []
+    }
     await nextTick()
     topicLoading.value = false
   }
+
   async function loadJson(url: string) {
     // 加载
     try {
@@ -68,6 +110,7 @@ export const useTopicWatch = async (name: string) => {
       return []
     }
   }
+
   await getTopicList()
 }
 
