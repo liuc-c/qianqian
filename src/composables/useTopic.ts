@@ -4,6 +4,7 @@ const topicLoading = ref(false)
 const topic = ref([])
 const greenMode = ref(false)
 
+// 绿色模式，省点纸
 export const useGreenMode = () => {
   const changeGreenMode = () => {
     greenMode.value = !greenMode.value
@@ -11,6 +12,25 @@ export const useGreenMode = () => {
   return { greenMode, changeGreenMode }
 }
 
+// 答案模式
+const answerMode = ref(false)
+export const useAnswerMode = () => {
+  const changeAnswerMode = () => {
+    answerMode.value = !answerMode.value
+  }
+  return { answerMode, changeAnswerMode }
+}
+
+// 答案解析相关
+const answerAnalyse = ref(false)
+export const useAnswerAnalyse = () => {
+  const changeAnswerAnalyse = () => {
+    answerAnalyse.value = !answerAnalyse.value
+  }
+  return { answerAnalyse, changeAnswerAnalyse }
+}
+
+// 题目加载
 export const useTopicLoad = () => {
   const loading = function () {
     topicLoading.value = true
@@ -25,6 +45,7 @@ export const useTopicLoad = () => {
   }
 }
 
+// 题目 watch
 export const useTopicWatch = async (name: string) => {
   const getTopicList = async () => {
     topicLoading.value = true
@@ -35,6 +56,7 @@ export const useTopicWatch = async (name: string) => {
       topic.value = await loadJson(url) as []
     }
     else { topic.value = [] }
+    await nextTick()
     topicLoading.value = false
   }
   async function loadJson(url: string) {
@@ -215,6 +237,7 @@ export const chapter = ref([
 ],
 )
 
+// 题目模式下 答案的显示与隐藏
 export const useShowAnswer = function () {
   const changeShowAnswer = function () {
     showAnswer.value = !showAnswer.value

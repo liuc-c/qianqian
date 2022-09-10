@@ -25,7 +25,6 @@ const { greenMode } = useGreenMode()
       </template>
     </TransitionGroup>
   </div>
-  <br>
 </template>
 
 <style scoped>

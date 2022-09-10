@@ -3,7 +3,14 @@ import type { Ref } from 'vue'
 import { useFilterQuestionsWatch, useQuestions } from '@/composables/useFilterQuestions'
 
 import FilterQuestions from '@/components/topic/FilterQuestions.vue'
-import { useGreenMode, useShowAnswer, useTopic, useTopicLoad } from '@/composables/useTopic'
+import {
+  useAnswerAnalyse,
+  useAnswerMode,
+  useGreenMode,
+  useShowAnswer,
+  useTopic,
+  useTopicLoad,
+} from '@/composables/useTopic'
 import { useWindowWidth } from '@/composables/useWindowWidth'
 
 defineProps<{ name: string }>()
@@ -39,24 +46,38 @@ const {
   changeGreenMode,
   greenMode,
 } = useGreenMode()
+const {
+  changeAnswerMode,
+  answerMode,
+} = useAnswerMode()
+const {
+  changeAnswerAnalyse,
+  answerAnalyse,
+} = useAnswerAnalyse()
 </script>
 
 <template>
   <div class="fixed-box print-hidden">
-    <n-space>
-      <n-button class="show-answer" size="tiny" type="info" @click="printPdf()">
+    <n-space :wrap-item="true">
+      <n-button key="print" class="show-answer" size="tiny" type="info" @click="printPdf()">
         打印
       </n-button>
-      <n-button :type="greenMode ? 'success' : 'info'" class="show-answer =" size="tiny" @click="changeGreenMode()">
+      <n-button key="greenMode" :type="greenMode ? 'success' : 'info'" size="tiny" @click="changeGreenMode()">
         {{ greenMode ? '不省了' : '省点纸吧' }}
       </n-button>
-      <n-button class="show-answer" size="tiny" type="success" @click="openDrawer('filterQuestions')">
+      <n-button key="answerAnalyse" :type="answerAnalyse ? 'success' : 'info'" size="tiny" @click="changeAnswerAnalyse()">
+        {{ answerAnalyse ? '不要解析' : '来点解析' }}
+      </n-button>
+      <n-button key="answerMode" :type="answerMode ? 'success' : 'info'" size="tiny" @click="changeAnswerMode()">
+        {{ answerMode ? '题目模式' : '答案模式' }}
+      </n-button>
+      <n-button key="filterQuestions" size="tiny" type="success" @click="openDrawer('filterQuestions')">
         题型
       </n-button>
-      <n-button class="show-answer" size="tiny" type="success" @click="openDrawer('chapter')">
+      <n-button key="chapter" size="tiny" type="success" @click="openDrawer('chapter')">
         章节
       </n-button>
-      <n-button class="show-answer" size="tiny" type="success" @click="changeShowAnswer">
+      <n-button key="showAnswer" :disabled="answerMode" size="tiny" type="success" @click="changeShowAnswer">
         {{ showAnswer ? '隐藏答案' : '显示答案' }}
       </n-button>
     </n-space>
@@ -71,7 +92,16 @@ const {
         {{ name }}
       </n-text>
     </n-h1>
-    <div text-left>
+    <div v-if="answerMode" :style="{ flexDirection: greenMode ? 'row' : 'column' }" class="answer-mode">
+      <TransitionGroup name="list">
+        <template v-for="item in topic">
+          <div v-if="isShowTopic(item.typeCode)" :key="item.questionId" text-left>
+            <answer :topic="item" />
+          </div>
+        </template>
+      </TransitionGroup>
+    </div>
+    <div v-else text-left>
       <template v-if="topic.length === 0">
         <div>暂无数据，请检查链接是否正确</div>
       </template>
@@ -87,6 +117,13 @@ const {
             <template v-else>
               <topic-radio :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
             </template>
+            <div v-if="item.answerAnalyse && answerAnalyse" mt-1>
+              <n-text type="info">
+                解析
+              </n-text>
+              <span v-html="item.answerAnalyse" />
+            </div>
+            <br>
           </div>
         </template>
       </TransitionGroup>
@@ -102,7 +139,15 @@ const {
   </n-drawer>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+.answer-mode{
+  display: flex;
+  flex-wrap: wrap;
+  >div{
+    margin-right: 30px;
+    margin-bottom: 6px;
+  }
+}
 .topic-title {
   text-align: left;
 }
