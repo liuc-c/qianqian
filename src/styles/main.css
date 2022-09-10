@@ -61,3 +61,10 @@ html.dark {
 .list-leave-active {
   position: absolute;
 }
+
+@media print {
+  /*打印设置不截断*/
+  .seal {
+    page-break-inside: avoid;
+  }
+}

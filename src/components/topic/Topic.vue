@@ -66,7 +66,10 @@ const {
       <n-button key="greenMode" :type="greenMode ? 'success' : 'info'" size="tiny" @click="changeGreenMode()">
         {{ greenMode ? '不省了' : '省点纸吧' }}
       </n-button>
-      <n-button key="answerAnalyse" :type="answerAnalyse ? 'success' : 'info'" size="tiny" @click="changeAnswerAnalyse()">
+      <n-button
+        key="answerAnalyse" :type="answerAnalyse ? 'success' : 'info'" size="tiny"
+        @click="changeAnswerAnalyse()"
+      >
         {{ answerAnalyse ? '不要解析' : '来点解析' }}
       </n-button>
       <n-button key="answerMode" :type="answerMode ? 'success' : 'info'" size="tiny" @click="changeAnswerMode()">
@@ -108,7 +111,7 @@ const {
       </template>
       <TransitionGroup name="list">
         <template v-for="item in topic" :key="item.questionId">
-          <div v-if="isShowTopic(item.typeCode)">
+          <div v-if="isShowTopic(item.typeCode)" class="seal">
             <template v-if="questions[item.typeCode] === '填空题'">
               <topic-input :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
             </template>
@@ -118,7 +121,7 @@ const {
             <template v-else>
               <topic-radio :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
             </template>
-            <div v-if="item.answerAnalyse && answerAnalyse" mt-1>
+            <div v-if="item.answerAnalyse !== '' && answerAnalyse" mt-1>
               <n-text type="info">
                 解析
               </n-text>
@@ -143,14 +146,16 @@ const {
 </template>
 
 <style lang="scss" scoped>
-.answer-mode{
+.answer-mode {
   display: flex;
   flex-wrap: wrap;
-  >div{
+
+  > div {
     margin-right: 30px;
     margin-bottom: 6px;
   }
 }
+
 .topic-title {
   text-align: left;
 }
