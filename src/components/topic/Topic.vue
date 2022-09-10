@@ -4,6 +4,7 @@ import { useFilterQuestionsWatch, useQuestions } from '@/composables/useFilterQu
 
 import FilterQuestions from '@/components/topic/FilterQuestions.vue'
 import {
+  isLastRepeatMainTopic,
   useAnswerAnalyse,
   useAnswerMode,
   useGreenMode,
@@ -101,7 +102,7 @@ const {
         </template>
       </TransitionGroup>
     </div>
-    <div v-else text-left>
+    <div v-else pb-10 text-left>
       <template v-if="topic.length === 0">
         <div>暂无数据，请检查链接是否正确</div>
       </template>
@@ -123,7 +124,9 @@ const {
               </n-text>
               <span v-html="item.answerAnalyse" />
             </div>
-            <br>
+            <template v-if="item.mainTopic === '' || isLastRepeatMainTopic(item.mainTopic)">
+              <br>
+            </template>
           </div>
         </template>
       </TransitionGroup>
