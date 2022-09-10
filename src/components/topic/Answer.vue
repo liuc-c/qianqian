@@ -9,7 +9,7 @@ const {
 </script>
 
 <template>
-  <div>
+  <div class="seal">
     <span text-green>{{ topic.linkNo }}. </span>
     <template v-if="topic.rightResult">
       <span>{{ topic.rightResult }}</span>

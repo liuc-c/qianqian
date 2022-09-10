@@ -88,7 +88,6 @@ export const useTopicWatch = async (name: string) => {
       let preMainTopicLinkNo = 0 // 第一个相同题干的题号
       let nextMainTopicLinkNo = 0 // 上一个相同题干的题号
       let preAnswerAnalyse = '' // 上一个相同的解析
-      let preAnswerAnalyseLinkNo = 0 // 上一个相同解析的题号
       topic.value = res.map((item) => {
         // 处理重复题干
         if (item.mainTopic !== '') {
@@ -106,13 +105,10 @@ export const useTopicWatch = async (name: string) => {
         }
         // 处理重复解析
         if (item.answerAnalyse !== '') {
-          if (item.answerAnalyse !== preAnswerAnalyse) {
+          if (item.answerAnalyse !== preAnswerAnalyse)
             preAnswerAnalyse = item.answerAnalyse
-            preAnswerAnalyseLinkNo = item.linkNo
-          }
-          else {
-            item.answerAnalyse = `同${preAnswerAnalyseLinkNo}题`
-          }
+          else
+            item.answerAnalyse = ''
         }
         return item
       })
