@@ -57,6 +57,24 @@ export const useTopicLoad = () => {
   }
 }
 
+/**
+ * 是否是重复的题干
+ * @param str 题干
+ */
+export const isRepeatMainTopic = (str: string) => {
+  const rex = /^-\d+$/
+  return rex.test(str)
+}
+
+/**
+ * 是否是最后一个重复的题干
+ * @param str 题干
+ */
+export const isLastRepeatMainTopic = (str: string) => {
+  const rex = /^-\d+-last$/
+  return rex.test(str)
+}
+
 // 题目 watch
 export const useTopicWatch = async (name: string) => {
   const getTopicList = async () => {
@@ -66,19 +84,24 @@ export const useTopicWatch = async (name: string) => {
     if (subjectArr.length === 3) {
       const url = `${subjectArr[0]}/${subjectArr[1]}/${subjectArr[2]}`
       const res = await loadJson(url) as Topic[]
-      let preMainTopic = ''
-      let preMainTopicLinkNo = 0
-      let preAnswerAnalyse = ''
-      let preAnswerAnalyseLinkNo = 0
+      let preMainTopic = '' // 上一个相同的题干
+      let preMainTopicLinkNo = 0 // 第一个相同题干的题号
+      let nextMainTopicLinkNo = 0 // 上一个相同题干的题号
+      let preAnswerAnalyse = '' // 上一个相同的解析
+      let preAnswerAnalyseLinkNo = 0 // 上一个相同解析的题号
       topic.value = res.map((item) => {
         // 处理重复题干
         if (item.mainTopic !== '') {
           if (preMainTopic !== item.mainTopic) {
+            if (nextMainTopicLinkNo !== 0 && isRepeatMainTopic(res[nextMainTopicLinkNo - 1].mainTopic))
+              res[nextMainTopicLinkNo - 1].mainTopic = `-${preMainTopicLinkNo}-last`
             preMainTopic = item.mainTopic
             preMainTopicLinkNo = item.linkNo
+            nextMainTopicLinkNo = item.linkNo
           }
           else {
-            item.mainTopic = `同${preMainTopicLinkNo}题`
+            item.mainTopic = `-${preMainTopicLinkNo}`
+            nextMainTopicLinkNo = item.linkNo
           }
         }
         // 处理重复解析
