@@ -154,6 +154,7 @@ const {
 
 .fixed-box {
   position: fixed;
+  z-index: 999;
   top: 12px;
   right: 60px;
 }
