@@ -204,7 +204,6 @@ function askDivination() {
           height: 100%;
           background: white;
           border-radius: 100px 0 0 100px;
-          //border: 1px black solid;
           transform: rotate(180deg);
 
           &:before {
@@ -291,7 +290,6 @@ function askDivination() {
         transition-duration: 1s;
         background: #a4cab6;
       }
-
       .yao {
         right: 100px;
         margin-top: 20px;
@@ -307,7 +305,6 @@ function askDivination() {
           transform: translate(-50%, 0);
           background: white;
         }
-
         .yang {
           background: #2c3e50;
         }
