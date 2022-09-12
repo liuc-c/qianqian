@@ -41,10 +41,12 @@ declare global {
   const inject: typeof import('vue')['inject']
   const isDark: typeof import('./src/composables/dark')['isDark']
   const isDefined: typeof import('@vueuse/core')['isDefined']
+  const isLastRepeatMainTopic: typeof import('./src/composables/useTopic')['isLastRepeatMainTopic']
   const isProxy: typeof import('vue')['isProxy']
   const isReactive: typeof import('vue')['isReactive']
   const isReadonly: typeof import('vue')['isReadonly']
   const isRef: typeof import('vue')['isRef']
+  const isRepeatMainTopic: typeof import('./src/composables/useTopic')['isRepeatMainTopic']
   const isShowTopic: typeof import('./src/composables/useFilterQuestions')['isShowTopic']
   const makeDestructurable: typeof import('@vueuse/core')['makeDestructurable']
   const markRaw: typeof import('vue')['markRaw']
@@ -107,6 +109,8 @@ declare global {
   const unrefElement: typeof import('@vueuse/core')['unrefElement']
   const until: typeof import('@vueuse/core')['until']
   const useActiveElement: typeof import('@vueuse/core')['useActiveElement']
+  const useAnswerAnalyse: typeof import('./src/composables/useTopic')['useAnswerAnalyse']
+  const useAnswerMode: typeof import('./src/composables/useTopic')['useAnswerMode']
   const useArrayEvery: typeof import('@vueuse/core')['useArrayEvery']
   const useArrayFilter: typeof import('@vueuse/core')['useArrayFilter']
   const useArrayFind: typeof import('@vueuse/core')['useArrayFind']
@@ -318,10 +322,12 @@ declare module '@vue/runtime-core' {
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
     readonly isDark: UnwrapRef<typeof import('./src/composables/dark')['isDark']>
     readonly isDefined: UnwrapRef<typeof import('@vueuse/core')['isDefined']>
+    readonly isLastRepeatMainTopic: UnwrapRef<typeof import('./src/composables/useTopic')['isLastRepeatMainTopic']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
+    readonly isRepeatMainTopic: UnwrapRef<typeof import('./src/composables/useTopic')['isRepeatMainTopic']>
     readonly isShowTopic: UnwrapRef<typeof import('./src/composables/useFilterQuestions')['isShowTopic']>
     readonly makeDestructurable: UnwrapRef<typeof import('@vueuse/core')['makeDestructurable']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
@@ -384,6 +390,8 @@ declare module '@vue/runtime-core' {
     readonly unrefElement: UnwrapRef<typeof import('@vueuse/core')['unrefElement']>
     readonly until: UnwrapRef<typeof import('@vueuse/core')['until']>
     readonly useActiveElement: UnwrapRef<typeof import('@vueuse/core')['useActiveElement']>
+    readonly useAnswerAnalyse: UnwrapRef<typeof import('./src/composables/useTopic')['useAnswerAnalyse']>
+    readonly useAnswerMode: UnwrapRef<typeof import('./src/composables/useTopic')['useAnswerMode']>
     readonly useArrayEvery: UnwrapRef<typeof import('@vueuse/core')['useArrayEvery']>
     readonly useArrayFilter: UnwrapRef<typeof import('@vueuse/core')['useArrayFilter']>
     readonly useArrayFind: UnwrapRef<typeof import('@vueuse/core')['useArrayFind']>

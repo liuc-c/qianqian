@@ -9,7 +9,7 @@ const { greenMode } = useGreenMode()
 
 <template>
   <topic-common :question-type="questionType" :topic="topic" />
-  <div :class="{ 'answer-box': greenMode }">
+  <div :class="{ 'answer-box': greenMode }" ml-5>
     <template v-for="item in topic.choiceAnswers" :key="`${topic.questionId}${item.mark}`">
       <p :class="{ 'text-green': item.correct && showAnswer }">
         <span v-html="item.mark" />. <span v-html="item.choiceAnswer" />
