@@ -10,7 +10,9 @@ const {
 
 <template>
   <div class="seal">
-    <span mr-1 text-green>{{ topic.linkNo }}.</span>
+    <n-text mr-1 type="info">
+      {{ topic.linkNo }}.
+    </n-text>
     <template v-if="questionType === '简答题' || questionType === '名词解释'">
       <span v-html="topic.answerAnalyse" />
     </template>
