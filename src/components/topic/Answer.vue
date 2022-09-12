@@ -2,7 +2,7 @@
 import type { Topic } from '@/api/print/topicType'
 import { useAnswerAnalyse } from '@/composables/useTopic'
 
-defineProps<{ topic: Topic }>()
+defineProps<{ topic: Topic; questionType: string }>()
 const {
   answerAnalyse,
 } = useAnswerAnalyse()
@@ -10,8 +10,16 @@ const {
 
 <template>
   <div class="seal">
-    <span text-green>{{ topic.linkNo }}. </span>
-    <template v-if="topic.rightResult">
+    <span mr-1 text-green>{{ topic.linkNo }}.</span>
+    <template v-if="questionType === '简答题' || questionType === '名词解释'">
+      <span v-html="topic.answerAnalyse" />
+    </template>
+    <template v-else-if="questionType === '判断题'">
+      <template v-for="item in topic.choiceAnswers" :key="`${topic.questionId}${item.mark}`">
+        <span v-if="item.correct" v-html="item.choiceAnswer" />
+      </template>
+    </template>
+    <template v-else-if="topic.rightResult">
       <span>{{ topic.rightResult }}</span>
     </template>
     <template v-else>
@@ -19,19 +27,22 @@ const {
         <span v-if="item.correct">{{ item.mark }}</span>
         <!-- 填空题 -->
         <template v-if="topic.typeCode === '03'">
-          <span>.&nbsp;</span>
+          <span mr-1>.</span>
           <span border-b v-html="item.choiceAnswer" />
-          <span>&nbsp;&nbsp;</span>
+          <span mr-4 />
         </template>
       </template>
     </template>
-    <template v-if="topic.answerAnalyse && answerAnalyse">
+    <!-- 解析 -->
+    <template
+      v-if="topic.answerAnalyse && answerAnalyse
+        && !(questionType === '简答题' || questionType === '名词解释')"
+    >
       <n-text ml-2 type="info">
         解析：
       </n-text>
       <span v-html="topic.answerAnalyse" />
     </template>
-    <br>
   </div>
 </template>
 
