@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import type { Ref } from 'vue'
+import TopicTrueOrFalse from '@/components/topic/TopicTrueOrFalse.vue'
 import { useFilterQuestionsWatch, useQuestions } from '@/composables/useFilterQuestions'
 
 import FilterQuestions from '@/components/topic/FilterQuestions.vue'
 import {
-  isLastRepeatMainTopic,
   useAnswerAnalyse,
   useAnswerMode,
   useGreenMode,
@@ -86,25 +86,29 @@ const {
       </n-button>
     </n-space>
   </div>
+  <!-- 骨架加载 -->
   <template v-if="topicLoading">
     <n-skeleton height="40px" mb-6 mt-6 width="33%" />
     <n-skeleton :repeat="40" text />
   </template>
   <template v-else>
+    <!-- 标题 -->
     <n-h1 align-text class="topic-title" prefix="bar" type="success">
       <n-text type="success">
         {{ name }}
       </n-text>
     </n-h1>
+    <!-- 答案模式 -->
     <div v-if="answerMode" :style="{ flexDirection: greenMode ? 'row' : 'column' }" class="answer-mode">
       <TransitionGroup name="list">
         <template v-for="item in topic">
           <div v-if="isShowTopic(item.typeCode)" :key="item.questionId" text-left>
-            <answer :topic="item" />
+            <answer :question-type="questions[item.typeCode]" :topic="item" />
           </div>
         </template>
       </TransitionGroup>
     </div>
+    <!-- 题目模式 -->
     <div v-else pb-10 text-left>
       <template v-if="topic.length === 0">
         <div>暂无数据，请检查链接是否正确</div>
@@ -112,16 +116,32 @@ const {
       <TransitionGroup name="list">
         <template v-for="item in topic" :key="item.questionId">
           <div v-if="isShowTopic(item.typeCode)" class="seal">
+            <!-- 填空题 -->
             <template v-if="questions[item.typeCode] === '填空题'">
               <topic-input :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
             </template>
+            <!-- 简答题和名词解释题 -->
+            <template v-else-if="questions[item.typeCode] === '简答题' || questions[item.typeCode] === '名词解释'">
+              <topic-answer-question :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
+            </template>
+            <!-- 判断题 -->
+            <template v-else-if="questions[item.typeCode] === '判断题'">
+              <TopicTrueOrFalse :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
+            </template>
+            <!-- 多选题 -->
             <template v-else-if="item.rightResult.length > 1">
               <topic-multiple :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
             </template>
+            <!-- 单选题 -->
             <template v-else>
               <topic-radio :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
             </template>
-            <div v-if="item.answerAnalyse !== '' && answerAnalyse" mt-1>
+            <!-- 解析 (简答题和名词解释不需要解析,解析即答案) -->
+            <div
+              v-if="item.answerAnalyse !== '' && answerAnalyse
+                && !(questions[item.typeCode] === '简答题' || questions[item.typeCode] === '名词解释')"
+              mt-1
+            >
               <n-text type="info">
                 解析
               </n-text>
@@ -135,6 +155,7 @@ const {
       </TransitionGroup>
     </div>
   </template>
+  <!-- 抽屉 -->
   <n-drawer v-model:show="active" :width="windowWidth < 600 ? windowWidth : 600" placement="right">
     <template v-if="drawerFlag === 'filterQuestions'">
       <FilterQuestions v-model:active="active" v-model:topicTypeArr="topicTypeArr" />
