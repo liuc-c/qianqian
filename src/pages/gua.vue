@@ -193,7 +193,7 @@ function askDivination() {
 
           &:before {
             content: "";
-            background: white;
+            background: #e2e1e4;
             width: 100px;
             height: 100px;
             box-sizing: border-box;
@@ -211,7 +211,7 @@ function askDivination() {
           left: 50%;
           width: 50%;
           height: 100%;
-          background: white;
+          background: #e2e1e4;
           border-radius: 100px 0 0 100px;
           transform: rotate(180deg);
 
@@ -222,7 +222,7 @@ function askDivination() {
             height: 100px;
             box-sizing: border-box;
             position: absolute;
-            border: white solid 30px;
+            border: #e2e1e4 solid 30px;
             border-radius: 50%;
             z-index: 1;
             left: 50%;
