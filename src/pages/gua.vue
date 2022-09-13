@@ -14,11 +14,22 @@ const yaoDetail = ref([])
 const guaName = ref('')
 // 卦的解析
 const guaDetail = ref('')
+// 设置显示或隐藏
+const isShow = ref(false)
 // 初始化
 onMounted(() => {
   getInfo()
+  // 手机端适应
 })
-
+// 手机端适配
+// 显示图片
+function onShow() {
+  isShow.value = !isShow.value
+  // 去掉卦象和卦辞
+  yaoDetail.value = []
+  yaoArr.value = []
+  guaName.value = ''
+}
 // 请请求数据
 async function getInfo() {
 // 请求数据
@@ -59,6 +70,7 @@ function jieXi() {
 
 // 点击算卦获取卦值
 function askDivination() {
+  isShow.value = false
   // 取四个随机数
   // 模仿3个硬币获取2个随机数的数组
   let arr = []
@@ -96,7 +108,10 @@ function askDivination() {
     <n-button type="primary" @click="askDivination">
       算卦
     </n-button>
-    <div class="content">
+    <n-button type="primary" @click="onShow">
+      八卦阵
+    </n-button>
+    <div v-if="!isShow" class="content">
       <div class="left">
         <div class="leftTitle">
           {{ guaName }}
@@ -116,7 +131,7 @@ function askDivination() {
       </div>
     </div>
     <!-- 爻层  -->
-    <div class="baGua">
+    <div v-show="isShow" class="baGua">
       <div class="planet">
         <!--  旋转的爻    -->
         <div class="ball" />
@@ -133,30 +148,27 @@ function askDivination() {
 <style scoped lang="scss">
 .gossip {
   height: 100vh;
+  //position: relative;
+  .n-button{
+    margin: 10px;
+  }
   .baGua {
-    position: absolute;
-    top: 50px;
-    left: 100px;
+    position: relative;
     display: flex;
-    //background-image: linear-gradient(180deg, #020205 0%, #170f39 51%, #35247a 95%);
-    //width: 100%;
-    //height: 300px;
-    //align-items: center;
-    //justify-content: center;
-
+    justify-content: center;
+    top: 100px;
     .planet {
-      position: absolute;
-      border: 2px solid #fff;
-      transform-style: preserve-3d;
-      width: 200px;
-      height: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      //position: absolute;
+      //border: 2px solid #fff;
+      //transform-style: preserve-3d;
+      //width: 50vw;
+      //height: 50vw;
+      //display: flex;
+      //align-items: center;
+      //justify-content: center;
       transform: rotateZ(45deg);
       animation: planet-rotate 50s linear infinite;
-      border-radius: 50%;
-
+      //border-radius: 50%;
       .ball {
         width: 25px;
         height: 25px;
@@ -168,13 +180,10 @@ function askDivination() {
         transform: rotateZ(-45deg); // 中和轨道的旋转
         //animation: self-rotate 180s linear infinite;
       }
-
       .guaImg {
         width: 200px;
         height: 200px;
         position: relative;
-        //animation: rotate 180s linear infinite;
-
         .left {
           width: 50%;
           height: 100%;
