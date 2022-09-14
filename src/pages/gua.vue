@@ -104,6 +104,7 @@ function askDivination() {
 </script>
 
 <template>
+  <!--  <div class="aaa" /> -->
   <div class="gossip">
     <n-button type="primary" @click="askDivination">
       算卦
@@ -111,26 +112,25 @@ function askDivination() {
     <n-button type="primary" @click="onShow">
       八卦阵
     </n-button>
-    <div v-if="!isShow" class="content">
-      <div class="left">
-        <div class="leftTitle">
-          {{ guaName }}
-        </div>
-        <!--        <div class="fontShow" v-for="(val,index) in yaoDetail" :key="index">{{ val }}</div> -->
+    <!--    卦名    -->
+    <div class="guaName">
+      {{ guaName }}
+    </div>
+    <!--   卦象和爻辞   -->
+    <div
+      v-for="(val, index) in yaoArr" :key="index" class="yao" :title="yaoDetail[index]"
+      @click="changeClassName(index)"
+    >
+      <!--    卦象      -->
+      <div class="guaXiang">
+        <div :class="val ? 'yang' : 'yin'" />
       </div>
-      <div class="showTime right">
-        <div
-          v-for="(val, index) in yaoArr" :key="index" class="yao" :title="yaoDetail[index]"
-          @click="changeClassName(index)"
-        >
-          <div :class="val ? 'yang' : 'yin'" />
-          <div class="yaoDetail">
-            {{ yaoDetail[index] }}
-          </div>
-        </div>
+      <!--    卦辞      -->
+      <div class="yaoDetail">
+        {{ yaoDetail[index] }}
       </div>
     </div>
-    <!-- 爻层  -->
+    <!-- 八卦阵  -->
     <div v-show="isShow" class="baGua">
       <div class="planet">
         <!--  旋转的爻    -->
@@ -148,27 +148,68 @@ function askDivination() {
 <style scoped lang="scss">
 .gossip {
   height: 100vh;
-  //position: relative;
+  //卦的标题
+  .guaName{
+    font-size: 4rem;
+    color: rgba(115, 124, 123, 0.5);
+    cursor: default;
+    transition-duration: 1s;
+  }
+    //卦辞
+    //鼠标移动到卦象时变色
+    .yao:hover{
+      height: 100px;
+      transition-duration: 1s;
+      cursor:pointer;
+      //transform: 0.1;
+    }
+    //卦象
+    .yao {
+      margin-top: 1rem;
+      //background: black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .guaXiang{
+        background-color: black;
+        position: relative;
+        width: 300px;
+        height: 50px;
+        .yin {
+          //margin-top: -1px;
+          position: absolute;
+          top: -1px;
+          width: 25px;
+          height: 52px;
+          left: 50%;
+          transform: translate(-50%, 0);
+          background: white;
+        }
+        .yang {
+          background: #2c3e50;
+          //height: 52px;
+        }
+      }
+    }
+    //卦辞
+    .yaoDetail {
+      //margin-top: 5px;
+      height: 50px;
+      font-size: 0.9rem;
+    }
+  //按钮
   .n-button{
     margin: 10px;
   }
+  //八卦阵
   .baGua {
     position: relative;
     display: flex;
     justify-content: center;
     top: 100px;
     .planet {
-      //position: absolute;
-      //border: 2px solid #fff;
-      //transform-style: preserve-3d;
-      //width: 50vw;
-      //height: 50vw;
-      //display: flex;
-      //align-items: center;
-      //justify-content: center;
       transform: rotateZ(45deg);
       animation: planet-rotate 50s linear infinite;
-      //border-radius: 50%;
       .ball {
         width: 25px;
         height: 25px;
@@ -178,7 +219,6 @@ function askDivination() {
         left: calc(50% - 12.5px);
         top: -50px;
         transform: rotateZ(-45deg); // 中和轨道的旋转
-        //animation: self-rotate 180s linear infinite;
       }
       .guaImg {
         width: 200px;
@@ -232,7 +272,6 @@ function askDivination() {
     }
 
   }
-
   // 公转动画
   @keyframes planet-rotate {
     0% {
@@ -242,7 +281,6 @@ function askDivination() {
       transform: scaleY(1) rotate(360deg);
     }
   }
-
   @keyframes rotate {
     0% {
       transform: rotateZ(0deg); //从零度开始
@@ -252,72 +290,6 @@ function askDivination() {
     }
     100% {
       transform: rotateZ(360deg); //从零度开始
-    }
-  }
-
-  .content {
-    margin-top: 50px;
-    display: flex;
-    justify-content: space-around;
-    flex-direction: row;
-
-    .left {
-      width: 50%;
-      font-size: 25px;
-      margin-top: 50px;
-
-      .leftTitle {
-        position: absolute;
-        right: 50%;
-        transform: translate(50%);
-        text-align: center;
-        font-size: 400px;
-        color: rgba(115, 124, 123, 0.5);
-        cursor: default;
-        transition-duration: 1s;
-      }
-    }
-
-    .right {
-      position: relative;
-
-      .yaoDetail {
-        position: absolute;
-        width: 900px;
-        height: 50px;
-        right: 400px;
-        font-size: 24px;
-      }
-    }
-
-    .showTime {
-      height: 600px;
-      position: relative;
-      vertical-align: middle;
-      //display: flex;
-      .yao:hover {
-        transition-duration: 1s;
-        background: #a4cab6;
-      }
-      .yao {
-        right: 100px;
-        margin-top: 20px;
-        width: 300px;
-        height: 50px;
-        background: black;
-
-        .yin {
-          position: absolute;
-          width: 20px;
-          height: 50px;
-          left: 50%;
-          transform: translate(-50%, 0);
-          background: white;
-        }
-        .yang {
-          background: #2c3e50;
-        }
-      }
     }
   }
 }
