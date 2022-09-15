@@ -13,7 +13,7 @@ function luckyDraw() {
 }
 // 获取几个随机数
 function getRandomNumber() {
-  if (number.value < 0 || number.value > 20) {
+  if (number.value <= 0 || number.value > 20) {
     message.warning('请输入1-20之间的数字！')
     return 0
   }
