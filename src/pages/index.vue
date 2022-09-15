@@ -40,7 +40,7 @@ const go = (url: string) => {
         class="m-3 text-sm"
         @click="go('/kuaiLe8')"
       >
-        快乐8
+        彩票快乐8
       </n-button>
     </div>
   </div>

@@ -80,5 +80,5 @@ function getRandomNumber() {
 
 <route lang="yaml">
 meta:
-  title: 快乐8
+  title: 彩票快乐8
 </route>
