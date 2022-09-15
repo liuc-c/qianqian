@@ -44,36 +44,34 @@ function getRandomNumber() {
     </n-button>
     <n-card title="中奖号码" :hoverable="true" size="large">
       <p>
-        <em op75 text-sm> 兰博基尼，指日可待！！！</em>
+        <em op75 text-sm> 兰博基尼，指日可待</em>
       </p>
-      <div v-for="(item, index) in numberArr" :key="index" p-2>
-        <span class="luckyNumberIndex">第{{ index + 1 }}位数字</span>
-        <span class="luckyNumber">{{ item }}</span>
-      </div>
+      <n-space :size="15">
+        <!--        <span class="luckyNumberIndex">第{{ index + 1 }}位数字</span> -->
+        <n-tag v-for="(item, index) in numberArr" :key="index" type="error">
+          {{ item }}
+        </n-tag>
+      </n-space>
     </n-card>
   </div>
 </template>
 
 <style scoped lang="scss">
   .box{
-    height: 25rem;
+    height: 35rem;
     display: flex;
     flex-direction: column;
     margin-top: 80px;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
   .n-card {
-        max-width: 400px;
+        max-width: 14.6rem;
         line-height:1rem;
         font-size: 1rem;
-      .luckyNumberIndex{
-          display: block;
-          height: 20px;
-          width: 12rem;
-        }
-      .luckyNumber{
-        color: #ee3f4d;
-      }
+        font-family: sans-serif;
+    .n-tag{
+      margin-top: 25px;
+    }
       }
   }
 </style>
