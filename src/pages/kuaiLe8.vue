@@ -37,7 +37,7 @@ function getRandomNumber() {
       <em op75 text-sm>操作步骤：输入1-20之间的数字，点击抽奖，得到中奖号码！！！</em>
     </p>
     <n-space justify="center" align="center">
-      <n-input v-model:value.number="number" placeholder="请输入1-20之间的一个数" />
+      <n-input v-model:value.number="number" placeholder="输入1-20之间的一个数" />
     </n-space>
     <n-button type="info" @click="luckyDraw">
       抽奖
