@@ -46,9 +46,10 @@ function getRandomNumber() {
       <p>
         <em op75 text-sm> 兰博基尼，指日可待！！！</em>
       </p>
-      <span v-for="(item, index) in numberArr" :key="index" p-2>
-        第{{ index + 1 }}位数字：{{ item }}
-      </span>
+      <div v-for="(item, index) in numberArr" :key="index" p-2>
+        <span class="luckyNumberIndex">第{{ index + 1 }}位数字</span>
+        <span class="luckyNumber">{{ item }}</span>
+      </div>
     </n-card>
   </div>
 </template>
@@ -62,14 +63,17 @@ function getRandomNumber() {
     justify-content: space-between;
     align-items: center;
   .n-card {
-        background-color: #ee3f4d;
         max-width: 400px;
         line-height:1rem;
         font-size: 1rem;
-        span{
-          display: flow-root;
-          text-align:left;
+      .luckyNumberIndex{
+          display: block;
+          height: 20px;
+          width: 12rem;
         }
+      .luckyNumber{
+        color: #ee3f4d;
+      }
       }
   }
 </style>
