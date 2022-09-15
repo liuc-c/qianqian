@@ -36,6 +36,12 @@ const go = (url: string) => {
       >
         哥德巴赫猜想
       </n-button>
+      <n-button
+        class="m-3 text-sm"
+        @click="go('/kuaiLe8')"
+      >
+        快乐8
+      </n-button>
     </div>
   </div>
 </template>
