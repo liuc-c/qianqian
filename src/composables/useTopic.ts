@@ -1,16 +1,48 @@
+import type { Ref } from 'vue'
 import { getList } from '@/api/print/topic'
+import type { Topic } from '@/api/print/topicType'
+
 const showAnswer = ref(false)
 const topicLoading = ref(false)
-const topic = ref([])
+const topic: Ref<Topic[]> = ref([])
 const greenMode = ref(false)
 
+// 绿色模式，省点纸
 export const useGreenMode = () => {
   const changeGreenMode = () => {
     greenMode.value = !greenMode.value
   }
-  return { greenMode, changeGreenMode }
+  return {
+    greenMode,
+    changeGreenMode,
+  }
 }
 
+// 答案模式
+const answerMode = ref(false)
+export const useAnswerMode = () => {
+  const changeAnswerMode = () => {
+    answerMode.value = !answerMode.value
+  }
+  return {
+    answerMode,
+    changeAnswerMode,
+  }
+}
+
+// 答案解析相关
+const answerAnalyse = ref(false)
+export const useAnswerAnalyse = () => {
+  const changeAnswerAnalyse = () => {
+    answerAnalyse.value = !answerAnalyse.value
+  }
+  return {
+    answerAnalyse,
+    changeAnswerAnalyse,
+  }
+}
+
+// 题目加载
 export const useTopicLoad = () => {
   const loading = function () {
     topicLoading.value = true
@@ -25,6 +57,25 @@ export const useTopicLoad = () => {
   }
 }
 
+/**
+ * 是否是重复的题干
+ * @param str 题干
+ */
+export const isRepeatMainTopic = (str: string) => {
+  const rex = /^-\d+$/
+  return rex.test(str)
+}
+
+/**
+ * 是否是最后一个重复的题干
+ * @param str 题干
+ */
+export const isLastRepeatMainTopic = (str: string) => {
+  const rex = /^-\d+-last$/
+  return rex.test(str)
+}
+
+// 题目 watch
 export const useTopicWatch = async (name: string) => {
   const getTopicList = async () => {
     topicLoading.value = true
@@ -32,11 +83,43 @@ export const useTopicWatch = async (name: string) => {
     const subjectArr = name.split('-')
     if (subjectArr.length === 3) {
       const url = `${subjectArr[0]}/${subjectArr[1]}/${subjectArr[2]}`
-      topic.value = await loadJson(url) as []
+      const res = await loadJson(url) as Topic[]
+      let preMainTopic = '' // 上一个相同的题干
+      let preMainTopicLinkNo = 0 // 第一个相同题干的题号
+      let nextMainTopicLinkNo = 0 // 上一个相同题干的题号
+      let preAnswerAnalyse = '' // 上一个相同的解析
+      topic.value = res.map((item) => {
+        // 处理重复题干
+        if (item.mainTopic !== '') {
+          if (preMainTopic !== item.mainTopic) {
+            if (nextMainTopicLinkNo !== 0 && isRepeatMainTopic(res[nextMainTopicLinkNo - 1].mainTopic))
+              res[nextMainTopicLinkNo - 1].mainTopic = `-${preMainTopicLinkNo}-last`
+            preMainTopic = item.mainTopic
+            preMainTopicLinkNo = item.linkNo
+            nextMainTopicLinkNo = item.linkNo
+          }
+          else {
+            item.mainTopic = `-${preMainTopicLinkNo}`
+            nextMainTopicLinkNo = item.linkNo
+          }
+        }
+        // 处理重复解析
+        if (item.answerAnalyse !== '') {
+          if (item.answerAnalyse !== preAnswerAnalyse)
+            preAnswerAnalyse = item.answerAnalyse
+          else
+            item.answerAnalyse = ''
+        }
+        return item
+      })
     }
-    else { topic.value = [] }
+    else {
+      topic.value = []
+    }
+    await nextTick()
     topicLoading.value = false
   }
+
   async function loadJson(url: string) {
     // 加载
     try {
@@ -46,6 +129,7 @@ export const useTopicWatch = async (name: string) => {
       return []
     }
   }
+
   await getTopicList()
 }
 
@@ -189,32 +273,32 @@ export const chapter = ref([
         ],
       },
       {
+        label: '核医学科',
+        child: [
+          { label: '其他' },
+        ],
+      },
+      {
+
+      },
+      {
+        label: '妇产科',
+        child: [
+          { label: '其他' },
+        ],
+      },
+      {
         label: '出科考试',
         child: [
           { label: '重症医学科' },
         ],
       },
-
-      // {
-      //   label: '核医学科',
-      //   child: [ // TODO
-      //     { label: '其他' },
-      //   ],
-      // },
-      // {
-
-      // },
-      // {
-      //   label: '妇产科', // TODO
-      //   child: [
-      //     { label: '其他' },
-      //   ],
-      // },
     ],
   },
 ],
 )
 
+// 题目模式下 答案的显示与隐藏
 export const useShowAnswer = function () {
   const changeShowAnswer = function () {
     showAnswer.value = !showAnswer.value

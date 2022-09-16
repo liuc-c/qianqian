@@ -8,18 +8,18 @@ const { greenMode } = useGreenMode()
 </script>
 
 <template>
-  <topic-common :question-type="questionType" :topic="topic" />
-  <div :class="{ 'answer-box': greenMode }" ml-5>
+  <div :class="{ 'true-of-false-box': greenMode }">
+    <topic-common :question-type="questionType" :topic="topic" />
     <TransitionGroup name="list">
       <template v-for="item in topic.choiceAnswers" :key="`${topic.questionId}${item.mark}`">
-        <p v-if="item.correct && showAnswer " class="text-green">
-          <span v-html="item.mark" />. <span border-b v-html="item.choiceAnswer" />
-        </p>
+        <span v-if="item.correct && showAnswer " class="text-green" ml-5 v-html="item.choiceAnswer" />
       </template>
     </TransitionGroup>
   </div>
 </template>
 
 <style scoped>
-
+.true-of-false-box{
+  display: flex;
+}
 </style>
