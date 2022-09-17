@@ -1,26 +1,16 @@
 <script lang="ts" setup>
 import type { Ref } from 'vue'
 import TopicTrueOrFalse from '@/components/topic/TopicTrueOrFalse.vue'
-import { useFilterQuestionsWatch, useQuestions } from '@/composables/useFilterQuestions'
+import { isShowTopic, useFilterQuestionsWatch, useQuestions } from '@/composables/useFilterQuestions'
 
 import FilterQuestions from '@/components/topic/FilterQuestions.vue'
-import {
-  useAnswerAnalyse,
-  useAnswerMode,
-  useGreenMode,
-  useShowAnswer,
-  useTopic,
-  useTopicLoad,
-} from '@/composables/useTopic'
+import { useAnswerAnalyse, useAnswerMode, useGreenMode, useShowAnswer, useTopic, useTopicLoad } from '@/composables/useTopic'
 import { useWindowWidth } from '@/composables/useWindowWidth'
 
 defineProps<{ name: string }>()
 const { topic } = useTopic()
 const { topicLoading } = useTopicLoad()
-const {
-  showAnswer,
-  changeShowAnswer,
-} = useShowAnswer()
+const { showAnswer, changeShowAnswer } = useShowAnswer()
 const active: Ref<boolean> = ref(false)
 
 const printPdf = () => {
@@ -43,18 +33,14 @@ const openDrawer = (flag: string) => {
   drawerFlag.value = flag
   active.value = !active.value
 }
-const {
-  changeGreenMode,
-  greenMode,
-} = useGreenMode()
-const {
-  changeAnswerMode,
-  answerMode,
-} = useAnswerMode()
-const {
-  changeAnswerAnalyse,
-  answerAnalyse,
-} = useAnswerAnalyse()
+
+const showTopic = computed(() => {
+  return topic.value.filter(item => isShowTopic(item.typeCode))
+})
+
+const { changeGreenMode, greenMode } = useGreenMode()
+const { changeAnswerMode, answerMode } = useAnswerMode()
+const { changeAnswerAnalyse, answerAnalyse } = useAnswerAnalyse()
 </script>
 
 <template>
@@ -111,11 +97,11 @@ const {
     <!-- 题目模式 -->
     <div v-else pb-10 text-left>
       <template v-if="topic.length === 0">
-        <div>暂无数据，请检查链接是否正确</div>
+        <div>暂无数据，请检查链接是否正确或重新加载</div>
       </template>
       <TransitionGroup name="list">
-        <template v-for="item in topic" :key="item.questionId">
-          <div v-if="isShowTopic(item.typeCode)" class="seal">
+        <template v-for="item in showTopic" :key="item.questionId">
+          <div class="seal">
             <!-- 填空题 -->
             <template v-if="questions[item.typeCode] === '填空题'">
               <topic-input :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
@@ -139,8 +125,7 @@ const {
             <!-- 解析 (简答题和名词解释不需要解析,解析即答案) -->
             <div
               v-if="item.answerAnalyse !== '' && answerAnalyse
-                && !(questions[item.typeCode] === '简答题' || questions[item.typeCode] === '名词解释')"
-              mt-1
+                && !(questions[item.typeCode] === '简答题' || questions[item.typeCode] === '名词解释')" mt-1
             >
               <n-text type="info">
                 解析
