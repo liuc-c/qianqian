@@ -20,6 +20,7 @@ declare module '@vue/runtime-core' {
     TopicCommon: typeof import('./src/components/topic/TopicCommon.vue')['default']
     TopicInput: typeof import('./src/components/topic/TopicInput.vue')['default']
     TopicMultiple: typeof import('./src/components/topic/TopicMultiple.vue')['default']
+    TopicOfDry: typeof import('./src/components/question/topicOfDry.vue')['default']
     TopicRadio: typeof import('./src/components/topic/TopicRadio.vue')['default']
     TopicTrueOrFalse: typeof import('./src/components/topic/TopicTrueOrFalse.vue')['default']
   }

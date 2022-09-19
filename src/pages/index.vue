@@ -42,6 +42,12 @@ const go = (url: string) => {
       >
         彩票快乐8
       </n-button>
+      <n-button
+        class="m-3 text-sm"
+        @click="go('/questionBank/questionBank')"
+      >
+        高仿题库
+      </n-button>
     </div>
   </div>
 </template>
