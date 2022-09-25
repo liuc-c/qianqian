@@ -48,6 +48,12 @@ const go = (url: string) => {
       >
         高仿题库
       </n-button>
+      <n-button
+        class="m-3 text-sm"
+        @click="go('/particleEffects/particleEffects')"
+      >
+        ikun指南
+      </n-button>
     </div>
   </div>
 </template>

@@ -10,7 +10,7 @@ async function getInfo() {
   await getList('/json/医学电子书包/超声医学科/出科考试/重症医学科.json').then((res) => {
     // 把后台传递的数据赋值给data
     data.value = res
-    // console.log(data.value[0].topic)
+    console.log(data.value[0])
     // 处理数据题干数据
     data.value.forEach((item) => {
       topicOfDryData.value.push(item.topic)

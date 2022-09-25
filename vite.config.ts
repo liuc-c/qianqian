@@ -13,6 +13,10 @@ export default defineConfig({
     },
   },
   plugins: [
+    // 兼容require语法
+    // requireTransform({
+    //   fileRegex: /.ts$|.tsx$|.vue$/,
+    // }),
     Vue({
       reactivityTransform: true,
     }),
