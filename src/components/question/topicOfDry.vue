@@ -30,7 +30,6 @@ const questionsType = {
 // }
 function handleValidateClick(e) {
   e.preventDefault()
-  console.log(result.value)
   result.value?.validate((errors) => {
     if (!errors)
       message.success('Valid')
@@ -49,7 +48,6 @@ function publishedQuestionsType(str) {
 <template>
   <n-form
     ref="result"
-    inline
     :label-width="80"
     :model="formValue"
     :rules="rules"
@@ -60,7 +58,7 @@ function publishedQuestionsType(str) {
         提交
       </n-button>
     </n-form-item>
-    <n-form-item label="Radio Group" path="radioGroupValue">
+    <n-form-item label="Radio Group">
       <n-list hoverable clickable>
         <n-list-item v-for="(item, index) in topicOfDryData.slice(0, 4)" :key="index">
           <n-thing :title="`${`${index + 1}.`}${`${item.topic}：`}`" content-style="margin-top: 10px;">
@@ -74,7 +72,7 @@ function publishedQuestionsType(str) {
                 </n-tag>
               </n-space>
             </template>
-            <n-radio-group v-model:value="model.radioGroupValue" name="radiogroup">
+            <n-radio-group name="radiogroup">
               <n-space v-for="choice in item.choiceAnswers">
                 <n-radio :key="choice.choiceAnswer" :value="choice.choiceAnswer">
                   <span :class="{ actived: choice.correct } ">{{ choice.mark }}.{{ choice.choiceAnswer }}</span>
