@@ -1,10 +1,15 @@
 <script lang="ts" setup>
+import type { Ref } from 'vue'
 import type { Topic } from '@/api/print/topicType'
 import { useGreenMode, useShowAnswer } from '@/composables/useTopic'
+import { useTopicAnimeOfArr } from '@/composables/useTopicAnime'
 
 defineProps<{ topic: Topic; questionType: string }>()
 const { showAnswer } = useShowAnswer()
 const { greenMode } = useGreenMode()
+// 选项动画
+const topicOptions: Ref<HTMLElement[]> = ref([])
+useTopicAnimeOfArr(topicOptions, greenMode)
 </script>
 
 <template>
@@ -18,7 +23,7 @@ const { greenMode } = useGreenMode()
           </p>
         </template>
         <template v-else-if="questionType !== 'B型题'">
-          <p :class="{ 'text-green': item.correct && showAnswer }">
+          <p ref="topicOptions" :class="{ 'text-green': item.correct && showAnswer }">
             <span v-html="item.mark" />. <span v-html="item.choiceAnswer" />
           </p>
         </template>

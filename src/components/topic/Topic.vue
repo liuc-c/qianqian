@@ -1,26 +1,16 @@
 <script lang="ts" setup>
 import type { Ref } from 'vue'
 import TopicTrueOrFalse from '@/components/topic/TopicTrueOrFalse.vue'
-import { useFilterQuestionsWatch, useQuestions } from '@/composables/useFilterQuestions'
+import { isShowTopic, useFilterQuestionsWatch, useQuestions, useShowNewTopic } from '@/composables/useFilterQuestions'
 
 import FilterQuestions from '@/components/topic/FilterQuestions.vue'
-import {
-  useAnswerAnalyse,
-  useAnswerMode,
-  useGreenMode,
-  useShowAnswer,
-  useTopic,
-  useTopicLoad,
-} from '@/composables/useTopic'
+import { getChapterByName, useAnswerAnalyse, useAnswerMode, useGreenMode, useShowAnswer, useTopic, useTopicLoad } from '@/composables/useTopic'
 import { useWindowWidth } from '@/composables/useWindowWidth'
 
 defineProps<{ name: string }>()
 const { topic } = useTopic()
 const { topicLoading } = useTopicLoad()
-const {
-  showAnswer,
-  changeShowAnswer,
-} = useShowAnswer()
+const { showAnswer, changeShowAnswer } = useShowAnswer()
 const active: Ref<boolean> = ref(false)
 
 const printPdf = () => {
@@ -43,18 +33,15 @@ const openDrawer = (flag: string) => {
   drawerFlag.value = flag
   active.value = !active.value
 }
-const {
-  changeGreenMode,
-  greenMode,
-} = useGreenMode()
-const {
-  changeAnswerMode,
-  answerMode,
-} = useAnswerMode()
-const {
-  changeAnswerAnalyse,
-  answerAnalyse,
-} = useAnswerAnalyse()
+
+const showTopic = computed(() => {
+  return topic.value.filter(item => isShowTopic(item.typeCode, item.isNewTopic))
+})
+
+const { changeGreenMode, greenMode } = useGreenMode()
+const { changeAnswerMode, answerMode } = useAnswerMode()
+const { changeAnswerAnalyse, answerAnalyse } = useAnswerAnalyse()
+const { changeIsOnlyShowNewTopic, isOnlyShowNewTopic } = useShowNewTopic()
 </script>
 
 <template>
@@ -93,16 +80,38 @@ const {
   </template>
   <template v-else>
     <!-- 标题 -->
-    <n-h1 align-text class="topic-title" prefix="bar" type="success">
+    <n-h1 align-text class="left-title" prefix="bar" type="success">
       <n-text type="success">
         {{ name }}
       </n-text>
     </n-h1>
+    <!--    更新信息 -->
+    <n-blockquote class="left-title print-hidden">
+      <div>
+        <n-text>
+          更新时间：
+        </n-text>
+        <n-text type="success">
+          {{ getChapterByName(name).updateTime }}
+        </n-text>
+      </div>
+      <div>
+        <n-text>
+          新增题数：
+        </n-text>
+        <n-text type="success">
+          {{ getChapterByName(name).newCount }}
+        </n-text>
+      </div>
+      <n-button key="greenMode" :type="isOnlyShowNewTopic ? 'success' : 'info'" size="tiny" @click="changeIsOnlyShowNewTopic()">
+        {{ isOnlyShowNewTopic ? '显示所有题目' : '只显示新增题目' }}
+      </n-button>
+    </n-blockquote>
     <!-- 答案模式 -->
     <div v-if="answerMode" :style="{ flexDirection: greenMode ? 'row' : 'column' }" class="answer-mode">
       <TransitionGroup name="list">
-        <template v-for="item in topic">
-          <div v-if="isShowTopic(item.typeCode)" :key="item.questionId" text-left>
+        <template v-for="item in showTopic" :key="item.questionId">
+          <div text-left>
             <answer :question-type="questions[item.typeCode]" :topic="item" />
           </div>
         </template>
@@ -111,11 +120,11 @@ const {
     <!-- 题目模式 -->
     <div v-else pb-10 text-left>
       <template v-if="topic.length === 0">
-        <div>暂无数据，请检查链接是否正确</div>
+        <div>暂无数据，请检查链接是否正确或重新加载</div>
       </template>
       <TransitionGroup name="list">
-        <template v-for="item in topic" :key="item.questionId">
-          <div v-if="isShowTopic(item.typeCode)" class="seal">
+        <template v-for="item in showTopic" :key="item.questionId">
+          <div class="seal">
             <!-- 填空题 -->
             <template v-if="questions[item.typeCode] === '填空题'">
               <topic-input :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
@@ -139,8 +148,7 @@ const {
             <!-- 解析 (简答题和名词解释不需要解析,解析即答案) -->
             <div
               v-if="item.answerAnalyse !== '' && answerAnalyse
-                && !(questions[item.typeCode] === '简答题' || questions[item.typeCode] === '名词解释')"
-              mt-1
+                && !(questions[item.typeCode] === '简答题' || questions[item.typeCode] === '名词解释')" mt-1
             >
               <n-text type="info">
                 解析
@@ -177,7 +185,7 @@ const {
   }
 }
 
-.topic-title {
+.left-title {
   text-align: left;
 }
 

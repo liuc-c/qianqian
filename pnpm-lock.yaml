@@ -10,6 +10,7 @@ specifiers:
   '@vueuse/core': ^9.0.0
   axios: ^0.27.2
   eslint: ^8.20.0
+  gsap: ^3.11.1
   jsdom: ^20.0.0
   lodash: ^4.17.21
   naive-ui: ^2.32.2
@@ -30,6 +31,7 @@ specifiers:
 dependencies:
   '@vueuse/core': 9.0.0_vue@3.2.37
   axios: 0.27.2
+  gsap: 3.11.1
   lodash: 4.17.21
   naive-ui: 2.32.2_vue@3.2.37
   vue: 3.2.37
@@ -2569,6 +2571,10 @@ packages:
   /graceful-fs/4.2.10:
     resolution: {integrity: sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==}
     dev: true
+
+  /gsap/3.11.1:
+    resolution: {integrity: sha512-UKuJ0UPhntFHMwT6URFQ4cTQv88xc7Kd9Dhxt7qX9IPhC+d+/a5wKW5E5Vn33hZ53nBI1JfApcEbzKgXkcuPZw==}
+    dev: false
 
   /gzip-size/6.0.0:
     resolution: {integrity: sha512-ax7ZYomf6jqPTQ4+XCpUGyXKHk5WweS+e05MBO4/y3WJ5RkmPXNKvX+bx1behVILVwr6JSQvZAku021CHPXG3Q==}
