@@ -34,4 +34,5 @@ export interface Topic {
   mainId: string
   answerResult: any
   mainTopic: string
+  isNewTopic: boolean
 }
