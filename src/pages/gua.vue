@@ -134,7 +134,24 @@ function askDivination() {
     <div v-show="isShow" class="baGua">
       <div class="planet">
         <!--  旋转的爻    -->
-        <div class="ball" />
+        <!--        <div class="ball"> -->
+        <!--          5 -->
+        <!--        </div> -->
+        <!--        <div class="ball"> -->
+        <!--          4 -->
+        <!--        </div> -->
+        <!--        <div class="ball"> -->
+        <!--          3 -->
+        <!--        </div> -->
+        <!--        <div class="ball"> -->
+        <!--          2 -->
+        <!--        </div> -->
+        <!--        <div class="ball"> -->
+        <!--          1 -->
+        <!--        </div> -->
+        <!--        <svg width="200" height="200" viewBox="0 0 200 200"> -->
+        <!--          <circle id="circleBg" cx="100" cy="80" r="50" fill="none" stroke-width="10" stroke="gray" /> -->
+        <!--        </svg> -->
         <!-- 八卦图形 -->
         <div class="guaImg">
           <div class="left" />
@@ -208,17 +225,18 @@ function askDivination() {
     justify-content: center;
     top: 100px;
     .planet {
-      transform: rotateZ(45deg);
+      //transform: rotateZ(45deg);
       animation: planet-rotate 50s linear infinite;
       .ball {
         width: 25px;
         height: 25px;
-        position: absolute;
+        //position: absolute;
         border-radius: 50%;
         background-color: yellowgreen;
         left: calc(50% - 12.5px);
-        top: -50px;
-        transform: rotateZ(-45deg); // 中和轨道的旋转
+        //top: -50px;
+        //transform: rotateZ(-45deg); // 中和轨道的旋转
+        animation: planet-rotate 4s linear infinite;
       }
       .guaImg {
         width: 200px;
@@ -281,6 +299,7 @@ function askDivination() {
       transform: scaleY(1) rotate(360deg);
     }
   }
+  // 自转动画
   @keyframes rotate {
     0% {
       transform: rotateZ(0deg); //从零度开始
