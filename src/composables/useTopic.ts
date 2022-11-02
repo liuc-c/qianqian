@@ -217,6 +217,7 @@ export const chapter = ref([
         label: '出科考试',
         child: [
           { label: '重症医学科', newCount: 0, updateTime: '2022/9/12 21:00' },
+          { label: '妇产科', newCount: 0, updateTime: '2022/11/22 23:00' },
         ],
       },
     ],
