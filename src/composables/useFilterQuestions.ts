@@ -62,12 +62,26 @@ export const useShowNewTopic = () => {
     changeIsOnlyShowNewTopic,
   }
 }
-export const isShowTopic = (typeCode: string, isNewTopic: boolean) => {
+// 是否只显示删除题目
+const isOnlyShowDeleteTopic = ref<boolean>(false)
+export const useShowDeleteTopic = () => {
+  const changeIsOnlyShowDeleteTopic = () => {
+    isOnlyShowDeleteTopic.value = !isOnlyShowDeleteTopic.value
+  }
+  return {
+    isOnlyShowDeleteTopic,
+    changeIsOnlyShowDeleteTopic,
+  }
+}
+
+export const isShowTopic = (typeCode: string, isNewTopic: boolean, isDelete: boolean) => {
   const item = topicTypeArr.value.find(item => item.typeCode === typeCode)
   let isShow: boolean
   if (isOnlyShowNewTopic.value)
     isShow = isNewTopic && item?.isShow as boolean
+  else if (isOnlyShowDeleteTopic.value)
+    isShow = isDelete && item?.isShow as boolean
   else
-    isShow = item?.isShow as boolean
+    isShow = !isDelete && item?.isShow as boolean
   return isShow
 }

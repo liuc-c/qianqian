@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import type { Ref } from 'vue'
+import UpdateLog from '@/components/topic/UpdateLog.vue'
 import TopicTrueOrFalse from '@/components/topic/TopicTrueOrFalse.vue'
-import { isShowTopic, useFilterQuestionsWatch, useQuestions, useShowNewTopic } from '@/composables/useFilterQuestions'
+import { isShowTopic, useFilterQuestionsWatch, useQuestions, useShowNewTopic, useShowDeleteTopic } from '@/composables/useFilterQuestions'
 
 import FilterQuestions from '@/components/topic/FilterQuestions.vue'
-import { getChapterByName, useAnswerAnalyse, useAnswerMode, useGreenMode, useShowAnswer, useTopic, useTopicLoad } from '@/composables/useTopic'
+import { getChapterLogByName, useAnswerAnalyse, useAnswerMode, useGreenMode, useShowAnswer, useTopic, useTopicLoad } from '@/composables/useTopic'
 import { useWindowWidth } from '@/composables/useWindowWidth'
 
 defineProps<{ name: string }>()
@@ -35,13 +36,15 @@ const openDrawer = (flag: string) => {
 }
 
 const showTopic = computed(() => {
-  return topic.value.filter(item => isShowTopic(item.typeCode, item.isNewTopic))
+  return topic.value.filter(item => isShowTopic(item.typeCode, item.isNewTopic, item.isDelete))
 })
 
 const { changeGreenMode, greenMode } = useGreenMode()
 const { changeAnswerMode, answerMode } = useAnswerMode()
 const { changeAnswerAnalyse, answerAnalyse } = useAnswerAnalyse()
 const { changeIsOnlyShowNewTopic, isOnlyShowNewTopic } = useShowNewTopic()
+const { changeIsOnlyShowDeleteTopic, isOnlyShowDeleteTopic } = useShowDeleteTopic()
+
 </script>
 
 <template>
@@ -53,10 +56,7 @@ const { changeIsOnlyShowNewTopic, isOnlyShowNewTopic } = useShowNewTopic()
       <n-button key="greenMode" :type="greenMode ? 'success' : 'info'" size="tiny" @click="changeGreenMode()">
         {{ greenMode ? '不省了' : '省点纸吧' }}
       </n-button>
-      <n-button
-        key="answerAnalyse" :type="answerAnalyse ? 'success' : 'info'" size="tiny"
-        @click="changeAnswerAnalyse()"
-      >
+      <n-button key="answerAnalyse" :type="answerAnalyse ? 'success' : 'info'" size="tiny" @click="changeAnswerAnalyse()">
         {{ answerAnalyse ? '不要解析' : '来点解析' }}
       </n-button>
       <n-button key="answerMode" :type="answerMode ? 'success' : 'info'" size="tiny" @click="changeAnswerMode()">
@@ -84,27 +84,20 @@ const { changeIsOnlyShowNewTopic, isOnlyShowNewTopic } = useShowNewTopic()
       <n-text type="success">
         {{ name }}
       </n-text>
+      <n-text type="info" class="ml-2 print-hidden">
+        共 {{ showTopic.length || 0 }} 题
+      </n-text>
     </n-h1>
     <!--    更新信息 -->
     <n-blockquote class="left-title print-hidden">
-      <div>
-        <n-text>
-          更新时间：
-        </n-text>
-        <n-text type="success">
-          {{ getChapterByName(name).updateTime }}
-        </n-text>
-      </div>
-      <div>
-        <n-text>
-          新增题数：
-        </n-text>
-        <n-text type="success">
-          {{ getChapterByName(name).newCount }}
-        </n-text>
-      </div>
-      <n-button key="greenMode" :type="isOnlyShowNewTopic ? 'success' : 'info'" size="tiny" @click="changeIsOnlyShowNewTopic()">
-        {{ isOnlyShowNewTopic ? '显示所有题目' : '只显示新增题目' }}
+      <UpdateLog :update-log="getChapterLogByName(name)" />
+      <n-button :disabled="isOnlyShowDeleteTopic" key="greenMode" :type="isOnlyShowNewTopic ? 'success' : 'info'"
+        size="tiny" @click="changeIsOnlyShowNewTopic()">
+        {{ isOnlyShowNewTopic ? '显示非删除的所有题目' : '只显示新增题目' }}
+      </n-button>
+      <n-button style="margin-left:0.5rem" :disabled="isOnlyShowNewTopic" key="greenMode"
+        :type="isOnlyShowDeleteTopic ? 'success' : 'info'" size="tiny" @click="changeIsOnlyShowDeleteTopic()">
+        {{ isOnlyShowDeleteTopic ? '显示非删除的所有题目' : '只显示删除题目' }}
       </n-button>
     </n-blockquote>
     <!-- 答案模式 -->
@@ -122,45 +115,41 @@ const { changeIsOnlyShowNewTopic, isOnlyShowNewTopic } = useShowNewTopic()
       <template v-if="topic.length === 0">
         <div>暂无数据，请检查链接是否正确或重新加载</div>
       </template>
-      <TransitionGroup name="list">
-        <template v-for="item in showTopic" :key="item.questionId">
-          <div class="seal">
-            <!-- 填空题 -->
-            <template v-if="questions[item.typeCode] === '填空题'">
-              <topic-input :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
-            </template>
-            <!-- 简答题和名词解释题 -->
-            <template v-else-if="questions[item.typeCode] === '简答题' || questions[item.typeCode] === '名词解释'">
-              <topic-answer-question :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
-            </template>
-            <!-- 判断题 -->
-            <template v-else-if="questions[item.typeCode] === '判断题'">
-              <TopicTrueOrFalse :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
-            </template>
-            <!-- 多选题 -->
-            <template v-else-if="item.rightResult.length > 1">
-              <topic-multiple :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
-            </template>
-            <!-- 单选题 -->
-            <template v-else>
-              <topic-radio :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
-            </template>
-            <!-- 解析 (简答题和名词解释不需要解析,解析即答案) -->
-            <div
-              v-if="item.answerAnalyse !== '' && answerAnalyse
-                && !(questions[item.typeCode] === '简答题' || questions[item.typeCode] === '名词解释')" mt-1
-            >
-              <n-text type="info">
-                解析
-              </n-text>
-              <span v-html="item.answerAnalyse" />
-            </div>
-            <template v-if="item.mainTopic === '' || isLastRepeatMainTopic(item.mainTopic)">
-              <br>
-            </template>
+      <template v-for="item in showTopic" :key="item.questionId">
+        <div class="seal">
+          <!-- 填空题 -->
+          <template v-if="questions[item.typeCode] === '填空题'">
+            <topic-input :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
+          </template>
+          <!-- 简答题和名词解释题 -->
+          <template v-else-if="questions[item.typeCode] === '简答题' || questions[item.typeCode] === '名词解释'">
+            <topic-answer-question :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
+          </template>
+          <!-- 判断题 -->
+          <template v-else-if="questions[item.typeCode] === '判断题'">
+            <TopicTrueOrFalse :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
+          </template>
+          <!-- 多选题 -->
+          <template v-else-if="item.rightResult.length > 1">
+            <topic-multiple :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
+          </template>
+          <!-- 单选题 -->
+          <template v-else>
+            <topic-radio :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
+          </template>
+          <!-- 解析 (简答题和名词解释不需要解析,解析即答案) -->
+          <div v-if="item.answerAnalyse !== '' && answerAnalyse
+            && !(questions[item.typeCode] === '简答题' || questions[item.typeCode] === '名词解释')" mt-1>
+            <n-text type="info">
+              解析
+            </n-text>
+            <span v-html="item.answerAnalyse" />
           </div>
-        </template>
-      </TransitionGroup>
+          <template v-if="item.mainTopic === '' || isLastRepeatMainTopic(item.mainTopic)">
+            <br>
+          </template>
+        </div>
+      </template>
     </div>
   </template>
   <!-- 抽屉 -->
@@ -179,7 +168,7 @@ const { changeIsOnlyShowNewTopic, isOnlyShowNewTopic } = useShowNewTopic()
   display: flex;
   flex-wrap: wrap;
 
-  > div {
+  >div {
     margin-right: 30px;
     margin-bottom: 6px;
   }

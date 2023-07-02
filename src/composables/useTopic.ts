@@ -1,4 +1,5 @@
 import type { Ref } from 'vue'
+import chapters from '@/utils/chapter.json'
 import { getList } from '@/api/print/topic'
 import type { Topic } from '@/api/print/topicType'
 
@@ -94,6 +95,7 @@ export const useTopicWatch = async (name: string) => {
           if (preMainTopic !== item.mainTopic) {
             if (nextMainTopicLinkNo !== 0 && isRepeatMainTopic(res[nextMainTopicLinkNo - 1].mainTopic))
               res[nextMainTopicLinkNo - 1].mainTopic = `-${preMainTopicLinkNo}-last`
+
             preMainTopic = item.mainTopic
             preMainTopicLinkNo = item.linkNo
             nextMainTopicLinkNo = item.linkNo
@@ -137,107 +139,27 @@ export const useTopic = () => {
   return { topic }
 }
 
-export const chapter = ref([
-  {
-    label: '超声医学科',
-    child: [
-      {
-        label: '急诊科及重症监护室',
-        child: [
-          { label: '其他', newCount: 49, updateTime: '2022/9/27 22:40' },
-          { label: '重症监护室', newCount: 3378, updateTime: '2022/9/27 22:40' },
-          { label: '急诊科', newCount: 1995, updateTime: '2022/9/27 22:40' },
-        ],
-      },
-      {
-        label: '内科',
-        child: [
-          { label: '其他', newCount: 0, updateTime: '2022/9/12 21:00' },
-        ],
-      },
-      {
-        label: '超声医学科',
-        child: [
-          { label: '其他', newCount: 1425, updateTime: '2022/9/27 22:40' },
-          { label: '其他2', newCount: 4, updateTime: '2022/9/27 22:40' },
-          { label: '超声基础', newCount: 643, updateTime: '2022/9/27 22:40' },
-          { label: '介入超声', newCount: 45, updateTime: '2022/9/27 22:40' },
-          { label: '周围血管', newCount: 282, updateTime: '2023/6/30 01:20' },
-          { label: '基础知识', newCount: 504, updateTime: '2022/9/27 22:40' },
-          { label: '头颈、四肢和浅表器官', newCount: 233, updateTime: '2022/9/27 22:40' },
-          { label: '妇产科', newCount: 1702, updateTime: '2022/9/27 22:40' },
-          { label: '小儿', newCount: 2, updateTime: '2022/9/27 22:40' },
-          { label: '心脏', newCount: 1831, updateTime: '2022/9/27 22:40' },
-          { label: '心脏和胸壁、胸膜腔', newCount: 481, updateTime: '2022/9/27 22:40' },
-          { label: '泌尿系统、腹膜后间隙、大血管和肾上腺', newCount: 195, updateTime: '2022/9/27 22:40' },
-          { label: '浅表器官', newCount: 775, updateTime: '2022/9/27 22:40' },
-          { label: '浅表器官与周围血管', newCount: 0, updateTime: '2023/6/30 01:20' },
-          { label: '肌肉骨关节及外周神经系统', newCount: 61, updateTime: '2022/9/27 22:40' },
-          { label: '肝脏和脾脏', newCount: 156, updateTime: '2022/9/27 22:40' },
-          { label: '胆道、胰腺和胃肠', newCount: 159, updateTime: '2022/9/27 22:40' },
-          { label: '腹部(含胸部)', newCount: 2862, updateTime: '2022/9/27 22:40' },
-        ],
-      },
-      {
-        label: '医学影像科',
-        child: [
-          { label: '其他', newCount: 0, updateTime: '2022/9/12 21:00' },
-          { label: '介入放射学', newCount: 0, updateTime: '2022/9/12 21:00' },
-          { label: '呼吸系统', newCount: 0, updateTime: '2022/9/12 21:00' },
-          { label: '基础知识', newCount: 0, updateTime: '2022/9/12 21:00' },
-          { label: '循环系统', newCount: 0, updateTime: '2022/9/12 21:00' },
-          { label: '泌尿（含生殖）', newCount: 0, updateTime: '2022/9/12 21:00' },
-          { label: '消化系统', newCount: 0, updateTime: '2022/9/12 21:00' },
-          { label: '神经（含头颈部）', newCount: 0, updateTime: '2022/9/12 21:00' },
-          { label: '骨关节', newCount: 0, updateTime: '2022/9/12 21:00' },
-        ],
-      },
-      {
-        label: '外科',
-        child: [
-          { label: '其他', newCount: 0, updateTime: '2022/9/12 21:00' },
-        ],
-      },
-      {
-        label: '核医学科',
-        child: [
-          { label: '其他', newCount: 0, updateTime: '2022/9/12 21:00' },
-        ],
-      },
-      {
-
-      },
-      {
-        label: '妇产科',
-        child: [
-          { label: '其他', newCount: 2447, updateTime: '2022/9/27 22:40' },
-        ],
-      },
-      {
-        label: '出科考试',
-        child: [
-          { label: '重症医学科', newCount: 0, updateTime: '2022/9/12 21:00' },
-          { label: '妇产科', newCount: 0, updateTime: '2022/11/22 23:00' },
-        ],
-      },
-    ],
-  },
-],
-)
+export const chapter = ref(chapters)
 
 /**
- * 根据题目名称获取当前章节信息
+ * 根据题目名称获取当前章节的日志信息
  * @param name xx-xx-xx  例：超声医学科-超声医学科-其他
  */
-export const getChapterByName = (name: string) => {
-  const initData = { label: '', newCount: 0, updateTime: '未知' }
-  let currentChapter: { label: string; newCount: number ;updateTime: string } = initData
+export const getChapterLogByName = (name: string) => {
+  interface Chapter { time: number; newCount: number; deleteCount: number; updateTime: string }
+  const initData: Array<Chapter> = [{
+    time: 0,
+    newCount: 0,
+    deleteCount: 0,
+    updateTime: '未知',
+  }]
+  let currentChapter: Array<Chapter> = initData
   if (name) {
     const arr = name.split('-')
     if (arr.length === 3) {
       currentChapter = chapter.value.find(x => x.label === arr[0])
         ?.child?.find(x => x.label === arr[1])
-        ?.child?.find(x => x.label === arr[2]) || initData
+        ?.child?.find(x => x.label === arr[2])?.updateLog as Array<Chapter> || initData
       return currentChapter
     }
   }
