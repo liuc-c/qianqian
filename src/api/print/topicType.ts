@@ -35,4 +35,5 @@ export interface Topic {
   answerResult: any
   mainTopic: string
   isNewTopic: boolean
+  isDelete: boolean
 }

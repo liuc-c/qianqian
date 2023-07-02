@@ -21,5 +21,6 @@ declare module '@vue/runtime-core' {
     TopicMultiple: typeof import('./src/components/topic/TopicMultiple.vue')['default']
     TopicRadio: typeof import('./src/components/topic/TopicRadio.vue')['default']
     TopicTrueOrFalse: typeof import('./src/components/topic/TopicTrueOrFalse.vue')['default']
+    UpdateLog: typeof import('./src/components/topic/UpdateLog.vue')['default']
   }
 }

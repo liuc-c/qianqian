@@ -10,7 +10,7 @@ const {
 
 <template>
   <div class="seal">
-    <n-text mr-1 type="info">
+    <n-text :type="topic.isDelete ? 'error' : 'info'" mr-1>
       {{ topic.linkNo }}.
     </n-text>
     <template v-if="questionType === '简答题' || questionType === '名词解释'">
