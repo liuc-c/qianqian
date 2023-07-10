@@ -1,0 +1,197 @@
+[
+  {
+    "time": 1688321781170,
+    "updateDate": "2023/7/3",
+    "logs": [
+      {
+        "label": "超声医学科 > 内科 > 其他",
+        "newCount": 6532,
+        "deleteCount": 1025,
+        "updateTime": "2023/7/3 02:14:50",
+        "time": 1688321690732
+      },
+      {
+        "label": "超声医学科 > 超声医学科 > 其他",
+        "newCount": 112,
+        "deleteCount": 845,
+        "updateTime": "2023/7/3 02:09:00",
+        "time": 1688321340499
+      },
+      {
+        "label": "超声医学科 > 超声医学科 > 超声基础",
+        "newCount": 0,
+        "deleteCount": 172,
+        "updateTime": "2023/7/3 02:11:25",
+        "time": 1688321485691
+      },
+      {
+        "label": "超声医学科 > 超声医学科 > 基础知识",
+        "newCount": 93,
+        "deleteCount": 133,
+        "updateTime": "2023/7/3 02:09:44",
+        "time": 1688321384894
+      },
+      {
+        "label": "超声医学科 > 超声医学科 > 头颈、四肢和浅表器官",
+        "newCount": 0,
+        "deleteCount": 374,
+        "updateTime": "2023/7/3 02:11:00",
+        "time": 1688321460069
+      },
+      {
+        "label": "超声医学科 > 超声医学科 > 妇产科",
+        "newCount": 257,
+        "deleteCount": 503,
+        "updateTime": "2023/7/3 02:10:10",
+        "time": 1688321410235
+      },
+      {
+        "label": "超声医学科 > 超声医学科 > 小儿",
+        "newCount": 205,
+        "deleteCount": 0,
+        "updateTime": "2023/7/3 02:11:09",
+        "time": 1688321469058
+      },
+      {
+        "label": "超声医学科 > 超声医学科 > 心脏",
+        "newCount": 114,
+        "deleteCount": 346,
+        "updateTime": "2023/7/3 02:09:26",
+        "time": 1688321366112
+      },
+      {
+        "label": "超声医学科 > 超声医学科 > 心脏和胸壁、胸膜腔",
+        "newCount": 0,
+        "deleteCount": 685,
+        "updateTime": "2023/7/3 02:11:31",
+        "time": 1688321491863
+      },
+      {
+        "label": "超声医学科 > 超声医学科 > 泌尿系统、腹膜后间隙、大血管和肾上腺",
+        "newCount": 0,
+        "deleteCount": 242,
+        "updateTime": "2023/7/3 02:12:31",
+        "time": 1688321551153
+      },
+      {
+        "label": "超声医学科 > 超声医学科 > 浅表器官",
+        "newCount": 427,
+        "deleteCount": 99,
+        "updateTime": "2023/7/3 02:10:34",
+        "time": 1688321434801
+      },
+      {
+        "label": "超声医学科 > 超声医学科 > 肝脏和脾脏",
+        "newCount": 0,
+        "deleteCount": 185,
+        "updateTime": "2023/7/3 02:10:51",
+        "time": 1688321451054
+      },
+      {
+        "label": "超声医学科 > 超声医学科 > 胆道、胰腺和胃肠",
+        "newCount": 0,
+        "deleteCount": 274,
+        "updateTime": "2023/7/3 02:11:37",
+        "time": 1688321497567
+      },
+      {
+        "label": "超声医学科 > 超声医学科 > 腹部(含胸部)",
+        "newCount": 393,
+        "deleteCount": 598,
+        "updateTime": "2023/7/3 02:12:17",
+        "time": 1688321537367
+      },
+      {
+        "label": "超声医学科 > 医学影像科 > 其他",
+        "newCount": 2757,
+        "deleteCount": 426,
+        "updateTime": "2023/7/3 02:12:58",
+        "time": 1688321578002
+      },
+      {
+        "label": "超声医学科 > 医学影像科 > 介入放射学",
+        "newCount": 170,
+        "deleteCount": 81,
+        "updateTime": "2023/7/3 02:13:36",
+        "time": 1688321616213
+      },
+      {
+        "label": "超声医学科 > 医学影像科 > 呼吸系统",
+        "newCount": 43,
+        "deleteCount": 22,
+        "updateTime": "2023/7/3 02:13:55",
+        "time": 1688321635639
+      },
+      {
+        "label": "超声医学科 > 医学影像科 > 基础知识",
+        "newCount": 465,
+        "deleteCount": 314,
+        "updateTime": "2023/7/3 02:13:22",
+        "time": 1688321602304
+      },
+      {
+        "label": "超声医学科 > 医学影像科 > 循环系统",
+        "newCount": 46,
+        "deleteCount": 25,
+        "updateTime": "2023/7/3 02:13:04",
+        "time": 1688321584585
+      },
+      {
+        "label": "超声医学科 > 医学影像科 > 泌尿（含生殖）",
+        "newCount": 14,
+        "deleteCount": 7,
+        "updateTime": "2023/7/3 02:13:27",
+        "time": 1688321607966
+      },
+      {
+        "label": "超声医学科 > 医学影像科 > 消化系统",
+        "newCount": 38,
+        "deleteCount": 19,
+        "updateTime": "2023/7/3 02:13:12",
+        "time": 1688321592894
+      },
+      {
+        "label": "超声医学科 > 医学影像科 > 神经（含头颈部）",
+        "newCount": 51,
+        "deleteCount": 28,
+        "updateTime": "2023/7/3 02:13:48",
+        "time": 1688321628768
+      },
+      {
+        "label": "超声医学科 > 医学影像科 > 骨关节",
+        "newCount": 46,
+        "deleteCount": 24,
+        "updateTime": "2023/7/3 02:13:43",
+        "time": 1688321623110
+      },
+      {
+        "label": "超声医学科 > 外科 > 其他",
+        "newCount": 5110,
+        "deleteCount": 1242,
+        "updateTime": "2023/7/3 02:15:26",
+        "time": 1688321726474
+      },
+      {
+        "label": "超声医学科 > 核医学科 > 其他",
+        "newCount": 734,
+        "deleteCount": 131,
+        "updateTime": "2023/7/3 02:14:13",
+        "time": 1688321653263
+      },
+      {
+        "label": "超声医学科 > 放射科 > 介入放射学",
+        "newCount": 9,
+        "deleteCount": 0,
+        "updateTime": "2023/7/3 02:08:37",
+        "time": 1688321317018
+      },
+      {
+        "label": "超声医学科 > 放射科 > 基础知识",
+        "newCount": 215,
+        "deleteCount": 0,
+        "updateTime": "2023/7/3 02:08:31",
+        "time": 1688321311571
+      }
+    ]
+  }
+]

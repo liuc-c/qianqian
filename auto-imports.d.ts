@@ -34,7 +34,7 @@ declare global {
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
   const extendRef: typeof import('@vueuse/core')['extendRef']
-  const getChapterByName: typeof import('./src/composables/useTopic')['getChapterByName']
+  const getChapterLogByName: typeof import('./src/composables/useTopic')['getChapterLogByName']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
   const h: typeof import('vue')['h']
@@ -221,6 +221,7 @@ declare global {
   const useSessionStorage: typeof import('@vueuse/core')['useSessionStorage']
   const useShare: typeof import('@vueuse/core')['useShare']
   const useShowAnswer: typeof import('./src/composables/useTopic')['useShowAnswer']
+  const useShowDeleteTopic: typeof import('./src/composables/useFilterQuestions')['useShowDeleteTopic']
   const useShowNewTopic: typeof import('./src/composables/useFilterQuestions')['useShowNewTopic']
   const useSlots: typeof import('vue')['useSlots']
   const useSpeechRecognition: typeof import('@vueuse/core')['useSpeechRecognition']
@@ -318,7 +319,7 @@ declare module '@vue/runtime-core' {
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
-    readonly getChapterByName: UnwrapRef<typeof import('./src/composables/useTopic')['getChapterByName']>
+    readonly getChapterLogByName: UnwrapRef<typeof import('./src/composables/useTopic')['getChapterLogByName']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
@@ -505,6 +506,7 @@ declare module '@vue/runtime-core' {
     readonly useSessionStorage: UnwrapRef<typeof import('@vueuse/core')['useSessionStorage']>
     readonly useShare: UnwrapRef<typeof import('@vueuse/core')['useShare']>
     readonly useShowAnswer: UnwrapRef<typeof import('./src/composables/useTopic')['useShowAnswer']>
+    readonly useShowDeleteTopic: UnwrapRef<typeof import('./src/composables/useFilterQuestions')['useShowDeleteTopic']>
     readonly useShowNewTopic: UnwrapRef<typeof import('./src/composables/useFilterQuestions')['useShowNewTopic']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
     readonly useSpeechRecognition: UnwrapRef<typeof import('@vueuse/core')['useSpeechRecognition']>

@@ -5,7 +5,7 @@ const emits = defineEmits<{ (event: 'update:active', active: boolean): void }>()
 const router = useRouter()
 const { topicLoading } = useTopicLoad()
 const go = (url: string) => {
-  if (props.windowWidth < 500)
+  if (props.windowWidth < 600)
     emits('update:active', false)
   router.push(`/print/${url}`)
 }

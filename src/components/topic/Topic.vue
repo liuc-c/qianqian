@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import type { Ref } from 'vue'
+import { toggleLog } from '@/composables/useLog'
 import UpdateLog from '@/components/topic/UpdateLog.vue'
 import TopicTrueOrFalse from '@/components/topic/TopicTrueOrFalse.vue'
-import { isShowTopic, useFilterQuestionsWatch, useQuestions, useShowNewTopic, useShowDeleteTopic } from '@/composables/useFilterQuestions'
+import { isShowTopic, useFilterQuestionsWatch, useQuestions, useShowDeleteTopic, useShowNewTopic } from '@/composables/useFilterQuestions'
 
 import FilterQuestions from '@/components/topic/FilterQuestions.vue'
 import { getChapterLogByName, useAnswerAnalyse, useAnswerMode, useGreenMode, useShowAnswer, useTopic, useTopicLoad } from '@/composables/useTopic'
@@ -44,7 +45,6 @@ const { changeAnswerMode, answerMode } = useAnswerMode()
 const { changeAnswerAnalyse, answerAnalyse } = useAnswerAnalyse()
 const { changeIsOnlyShowNewTopic, isOnlyShowNewTopic } = useShowNewTopic()
 const { changeIsOnlyShowDeleteTopic, isOnlyShowDeleteTopic } = useShowDeleteTopic()
-
 </script>
 
 <template>
@@ -52,6 +52,9 @@ const { changeIsOnlyShowDeleteTopic, isOnlyShowDeleteTopic } = useShowDeleteTopi
     <n-space :wrap-item="true">
       <n-button key="print" class="show-answer" size="tiny" type="info" @click="printPdf()">
         打印
+      </n-button>
+      <n-button key="print" class="show-answer" size="tiny" type="info" @click="toggleLog()">
+        更新日志
       </n-button>
       <n-button key="greenMode" :type="greenMode ? 'success' : 'info'" size="tiny" @click="changeGreenMode()">
         {{ greenMode ? '不省了' : '省点纸吧' }}
@@ -84,19 +87,23 @@ const { changeIsOnlyShowDeleteTopic, isOnlyShowDeleteTopic } = useShowDeleteTopi
       <n-text type="success">
         {{ name }}
       </n-text>
-      <n-text type="info" class="ml-2 print-hidden">
+      <n-text class="ml-2 print-hidden" type="info">
         共 {{ showTopic.length || 0 }} 题
       </n-text>
     </n-h1>
     <!--    更新信息 -->
     <n-blockquote class="left-title print-hidden">
       <UpdateLog :update-log="getChapterLogByName(name)" />
-      <n-button :disabled="isOnlyShowDeleteTopic" key="greenMode" :type="isOnlyShowNewTopic ? 'success' : 'info'"
-        size="tiny" @click="changeIsOnlyShowNewTopic()">
+      <n-button
+        key="greenMode" :disabled="isOnlyShowDeleteTopic" :type="isOnlyShowNewTopic ? 'success' : 'info'"
+        size="tiny" @click="changeIsOnlyShowNewTopic()"
+      >
         {{ isOnlyShowNewTopic ? '显示非删除的所有题目' : '只显示新增题目' }}
       </n-button>
-      <n-button style="margin-left:0.5rem" :disabled="isOnlyShowNewTopic" key="greenMode"
-        :type="isOnlyShowDeleteTopic ? 'success' : 'info'" size="tiny" @click="changeIsOnlyShowDeleteTopic()">
+      <n-button
+        key="greenMode" :disabled="isOnlyShowNewTopic" :type="isOnlyShowDeleteTopic ? 'success' : 'info'"
+        size="tiny" style="margin-left:0.5rem" @click="changeIsOnlyShowDeleteTopic()"
+      >
         {{ isOnlyShowDeleteTopic ? '显示非删除的所有题目' : '只显示删除题目' }}
       </n-button>
     </n-blockquote>
@@ -138,8 +145,10 @@ const { changeIsOnlyShowDeleteTopic, isOnlyShowDeleteTopic } = useShowDeleteTopi
             <topic-radio :key="item.questionId" :question-type="questions[item.typeCode]" :topic="item" />
           </template>
           <!-- 解析 (简答题和名词解释不需要解析,解析即答案) -->
-          <div v-if="item.answerAnalyse !== '' && answerAnalyse
-            && !(questions[item.typeCode] === '简答题' || questions[item.typeCode] === '名词解释')" mt-1>
+          <div
+            v-if="item.answerAnalyse !== '' && answerAnalyse
+              && !(questions[item.typeCode] === '简答题' || questions[item.typeCode] === '名词解释')" mt-1
+          >
             <n-text type="info">
               解析
             </n-text>
@@ -161,6 +170,7 @@ const { changeIsOnlyShowDeleteTopic, isOnlyShowDeleteTopic } = useShowDeleteTopi
       <chapter v-model:active="active" :window-width="windowWidth" />
     </template>
   </n-drawer>
+  <logs />
 </template>
 
 <style lang="scss" scoped>
